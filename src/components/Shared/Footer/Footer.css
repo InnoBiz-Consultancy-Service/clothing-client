@@ -1,0 +1,26 @@
+/* hover-effect.css */
+.hover-link {
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .hover-link:hover {
+    color: #f87171; /* equivalent to text-red-400 */
+    transform: translateX(4px); /* move right on hover */
+  }
+  
+  .hover-link::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #f87171; /* equivalent to bg-red-400 */
+    transition: all 0.3s ease;
+  }
+  
+  .hover-link:hover::after {
+    width: 100%; /* expand underline on hover */
+  }
