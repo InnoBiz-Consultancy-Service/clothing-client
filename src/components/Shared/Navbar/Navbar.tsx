@@ -135,8 +135,6 @@ export default function Navbar() {
                                     ))}
                                 </Accordion>
                             </div>
-
-
                         </SheetContent>
                     </Sheet>
                 </div>
