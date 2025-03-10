@@ -1,0 +1,234 @@
+[
+    {
+        "title": "MENS",
+        "link": "/mens",
+        "items": [
+            {
+                "name": "Half Sleeve T-shirt",
+                "link": "/mens/half-sleeve-t-shirt"
+            },
+            {
+                "name": "Full Sleeve T-shirt",
+                "link": "/mens/full-sleeve-t-shirt"
+            },
+            {
+                "name": "Drop Shoulder T-shirt",
+                "link": "/mens/drop-shoulder-t-shirt"
+            },
+            {
+                "name": "Sports T-shirt",
+                "link": "/mens/sports-t-shirt"
+            },
+            {
+                "name": "Polo T-shirt",
+                "link": "/mens/polo-t-shirt"
+            },
+            {
+                "name": "Shirt",
+                "link": "/mens/shirt"
+            },
+            {
+                "name": "Underwear",
+                "link": "/mens/underwear"
+            },
+            {
+                "name": "Panjabi",
+                "link": "/mens/panjabi"
+            },
+            {
+                "name": "Pajama",
+                "link": "/mens/pajama"
+            },
+            {
+                "name": "Denim Jeans",
+                "link": "/mens/denim-jeans"
+            },
+            {
+                "name": "Comfy Trouser",
+                "link": "/mens/comfy-trouser"
+            },
+            {
+                "name": "Sports Trouser",
+                "link": "/mens/sports-trouser"
+            },
+            {
+                "name": "Joggers",
+                "link": "/mens/joggers"
+            },
+            {
+                "name": "Hoodie",
+                "link": "/mens/hoodie"
+            },
+            {
+                "name": "Jacket",
+                "link": "/mens/jacket"
+            },
+            {
+                "name": "Shorts",
+                "link": "/mens/shorts"
+            }
+        ]
+    },
+    {
+        "title": "ACCESSORIES",
+        "link": "/accessories",
+        "items": [
+            {
+                "name": "Socks",
+                "link": "/accessories/socks"
+            },
+            {
+                "name": "Wallet",
+                "link": "/accessories/wallet"
+            },
+            {
+                "name": "Belt",
+                "link": "/accessories/belt"
+            },
+            {
+                "name": "Cap",
+                "link": "/accessories/cap"
+            },
+            {
+                "name": "Underwear",
+                "link": "/accessories/underwear"
+            },
+            {
+                "name": "Face Mask",
+                "link": "/accessories/face-mask"
+            }
+        ]
+    },
+    {
+        "title": "WOMENS",
+        "link": "/womens",
+        "items": [
+            {
+                "name": "Kurti, Tunic & Tops",
+                "link": "/womens/kurti-tunic-tops"
+            },
+            {
+                "name": "Teens Kurti, Tunic & Tops",
+                "link": "/womens/teens-kurti-tunic-tops"
+            },
+            {
+                "name": "T-Shirt",
+                "link": "/womens/t-shirt"
+            },
+            {
+                "name": "Designer Pajamas",
+                "link": "/womens/designer-pajamas"
+            },
+            {
+                "name": "Pants",
+                "link": "/womens/pants"
+            },
+            {
+                "name": "Palazzo",
+                "link": "/womens/palazzo"
+            },
+            {
+                "name": "Comfy Trouser",
+                "link": "/womens/comfy-trouser"
+            }
+        ]
+    },
+    {
+        "title": "KIDS (BOYS)",
+        "link": "/kids-boys",
+        "items": [
+            {
+                "name": "T-shirt",
+                "link": "/kids-boys/t-shirt"
+            },
+            {
+                "name": "Full Sleeve T-shirt",
+                "link": "/kids-boys/full-sleeve-t-shirt"
+            },
+            {
+                "name": "Polo T-shirt",
+                "link": "/kids-boys/polo-t-shirt"
+            },
+            {
+                "name": "Jacket",
+                "link": "/kids-boys/jacket"
+            },
+            {
+                "name": "Shorts",
+                "link": "/kids-boys/shorts"
+            },
+            {
+                "name": "Trouser",
+                "link": "/kids-boys/trouser"
+            },
+            {
+                "name": "Panjabi",
+                "link": "/kids-boys/panjabi"
+            }
+        ]
+    },
+    {
+        "title": "KIDS (GIRLS)",
+        "link": "/kids-girls",
+        "items": [
+            {
+                "name": "T-shirt",
+                "link": "/kids-girls/t-shirt"
+            },
+            {
+                "name": "Full Sleeve T-shirt",
+                "link": "/kids-girls/full-sleeve-t-shirt"
+            },
+            {
+                "name": "Frock",
+                "link": "/kids-girls/frock"
+            },
+            {
+                "name": "Two Piece Set",
+                "link": "/kids-girls/two-piece-set"
+            },
+            {
+                "name": "Shorts",
+                "link": "/kids-girls/shorts"
+            },
+            {
+                "name": "Jacket",
+                "link": "/kids-girls/jacket"
+            },
+            {
+                "name": "Trouser",
+                "link": "/kids-girls/trouser"
+            }
+        ]
+    },
+    {
+        "title": "SPORTS",
+        "link": "/sports",
+        "items": [
+            {
+                "name": "Football Jersey",
+                "link": "/sports/football-jersey"
+            },
+            {
+                "name": "Sports T-shirt",
+                "link": "/sports/sports-t-shirt"
+            },
+            {
+                "name": "Maggie (Single Jersey)",
+                "link": "/sports/maggie-single-jersey"
+            },
+            {
+                "name": "Shorts",
+                "link": "/sports/shorts"
+            },
+            {
+                "name": "Underwear",
+                "link": "/sports/underwear"
+            },
+            {
+                "name": "Socks",
+                "link": "/sports/socks"
+            }
+        ]
+    }
+]
