@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import ProductImage from './ProductImage';
 import toast, { Toaster } from 'react-hot-toast';
 
-const page = () => {
+const Page = () => {
   const product = {
     id: '1',
     name: 'Fabrilife Mens Premium Designer Edition T Shirt - Nostalgia',
@@ -62,20 +62,21 @@ const page = () => {
       'https://fabrilife.com/products/650182af39a77-square.jpeg',
     ],
   };
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]); 
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
 
-  const handleSizeSelect = (size) => {
+  const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
 
-  const handleQuantityChange = (type) => {
+  const handleQuantityChange = (type: string) => {
     setQuantity((prevQuantity) =>
       type === 'increase' ? prevQuantity + 1 : prevQuantity > 1 ? prevQuantity - 1 : 1
     );
   };
+
   const handleAddToCart = () => {
-    toast.success('product added Successfully')
+    toast.success('Product added successfully');
   };
 
   return (
@@ -95,23 +96,24 @@ const page = () => {
         <div className="flex gap-2 mt-2">
           {product.sizes.map((size) => (
             <button
-            className={`border px-4 py-2 rounded ${selectedSize === size ? "bg-gray-800 text-white" : ""}`}
-            key={size}
-            onClick={() => handleSizeSelect(size)}>
+              className={`border px-4 py-2 rounded ${selectedSize === size ? "bg-gray-800 text-white" : ""}`}
+              key={size}
+              onClick={() => handleSizeSelect(size)}
+            >
               {size}
             </button>
           ))}
         </div>
 
-        <div className="flex  gap-2">
+        <div className="flex gap-2">
           <div className="mt-4 flex items-center border gap-4">
-          <button onClick={() => handleQuantityChange('decrease')} className='px-4 py-1'>-</button>
+            <button onClick={() => handleQuantityChange('decrease')} className="px-4 py-1">-</button>
             <span>{quantity}</span>
-            <button onClick={() => handleQuantityChange('increase')}  className='px-4 py-1'>+</button>
+            <button onClick={() => handleQuantityChange('increase')} className="px-4 py-1">+</button>
           </div>
 
           <div>
-            <button onClick={()=> handleAddToCart()} className="mt-4 bg-black text-white px-6 py-3 font-bold">+ Add To Cart</button>
+            <button onClick={handleAddToCart} className="mt-4 bg-black text-white px-6 py-3 font-bold">+ Add To Cart</button>
           </div>
         </div>
 
@@ -170,11 +172,10 @@ const page = () => {
             </tbody>
           </table>
         </div>
-        <div><Toaster/></div>
-
+        <div><Toaster /></div>
       </div>
     </div>
   );
 };
 
-export default page;  
+export default Page;
