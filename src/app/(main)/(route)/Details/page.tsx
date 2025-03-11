@@ -1,5 +1,7 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import ProductImage from './ProductImage';
+import toast, { Toaster } from 'react-hot-toast';
 
 const page = () => {
   const product = {
@@ -10,7 +12,7 @@ const page = () => {
       discounted: 690,
     },
     sizes: ['M', 'XL'],
-    quantity: 1,
+    quantity: 7,
     description:
       "Fabrilife Men's Premium Quality t-shirt offers a much smoother, silky feel and more structured, mid-weight fit than regular t-shirts. The t-shirts are made with the finest quality Combed Compact Cotton, which features astonishing ~175 GSM on just 26's cotton, giving a smooth and compact construction. The compact finish guarantees that the t-shirt length and width will not change over wash or months of usage.",
     specifications: {
@@ -60,6 +62,21 @@ const page = () => {
       'https://fabrilife.com/products/650182af39a77-square.jpeg',
     ],
   };
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]); 
+  const [quantity, setQuantity] = useState(1);
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+  };
+
+  const handleQuantityChange = (type) => {
+    setQuantity((prevQuantity) =>
+      type === 'increase' ? prevQuantity + 1 : prevQuantity > 1 ? prevQuantity - 1 : 1
+    );
+  };
+  const handleAddToCart = () => {
+    toast.success('product added Successfully')
+  };
 
   return (
     <div className="container mx-auto p-4 flex flex-col md:flex-row gap-8">
@@ -77,21 +94,24 @@ const page = () => {
         <h3 className="mt-4 font-semibold">Select Size:</h3>
         <div className="flex gap-2 mt-2">
           {product.sizes.map((size) => (
-            <button key={size} className="border px-4 py-2 rounded">
+            <button
+            className={`border px-4 py-2 rounded ${selectedSize === size ? "bg-gray-800 text-white" : ""}`}
+            key={size}
+            onClick={() => handleSizeSelect(size)}>
               {size}
             </button>
           ))}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex  gap-2">
           <div className="mt-4 flex items-center border gap-4">
-            <button className="px-4 py-1">-</button>
-            <span>{product.quantity}</span>
-            <button className="px-4 py-1">+</button>
+          <button onClick={() => handleQuantityChange('decrease')} className='px-4 py-1'>-</button>
+            <span>{quantity}</span>
+            <button onClick={() => handleQuantityChange('increase')}  className='px-4 py-1'>+</button>
           </div>
 
           <div>
-            <button className="mt-4 bg-black text-white px-6 py-3 font-bold">+ Add To Cart</button>
+            <button onClick={()=> handleAddToCart()} className="mt-4 bg-black text-white px-6 py-3 font-bold">+ Add To Cart</button>
           </div>
         </div>
 
@@ -150,9 +170,11 @@ const page = () => {
             </tbody>
           </table>
         </div>
+        <div><Toaster/></div>
+
       </div>
     </div>
   );
 };
 
-export default page;
+export default page;  
