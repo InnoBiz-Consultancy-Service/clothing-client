@@ -3,7 +3,8 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import Link from "next/link";
 
 interface ProductProps {
   item: {
@@ -62,9 +63,9 @@ const ProductCard: React.FC<ProductProps> = ({ item }) => {
             <span className="font-semibold">Stock:</span> {item.stock} available
           </p>
 
-          <Button className="bg-gray-200 hover:bg-white text-gray-800 rounded-md py-2 px-6 font-medium transition-colors">
+          <Link href={"/Details"} className="bg-gray-200 hover:bg-white text-gray-800 rounded-md py-2 px-6 font-medium transition-colors">
             View Details
-          </Button>
+          </Link>
         </div>
       </div>
     </Card>
