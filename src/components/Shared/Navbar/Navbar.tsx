@@ -2,12 +2,13 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, Search, ShoppingCart } from "lucide-react"
+import { Menu, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import NavItems from "./NavItems/NavItems"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import navLinks from "../../../../public/navLinks.json"
+import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
@@ -96,11 +97,10 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
-                    <Link href="/cart" className="relative">
-                        <ShoppingCart className="h-6 w-6" />
-                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                            0
-                        </span>
+                    <Link href={'/dashboard'}>
+                        <Button variant="outline" className="text-gray-700">
+                            Dashboard
+                        </Button>
                     </Link>
 
                     {/* Mobile menu button */}

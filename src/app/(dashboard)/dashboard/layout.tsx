@@ -1,3 +1,5 @@
+import Slider from "@/components/Dashboard/Slider/Slider";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
     children,
@@ -6,8 +8,13 @@ export default function DashboardLayout({
 }>) {
     return (
         <html lang="en">
-            <body>
-                {children}
+            <body className="flex">
+                <SidebarProvider>
+                    <Slider />
+                    <main>
+                        {children}
+                    </main>
+                </SidebarProvider>
             </body>
         </html>
     );
