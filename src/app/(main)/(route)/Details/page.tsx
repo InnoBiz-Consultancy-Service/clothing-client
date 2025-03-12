@@ -56,10 +56,10 @@ const Page = () => {
     category: 'T-Shirt',
     brand: 'Fabrilife',
     images: [
-      'https://fabrilife.com/products/64e79c976372a-square.jpg?v=20',
-      'https://fabrilife.com/products/650182af39a77-square.jpeg',
-      'https://fabrilife.com/products/66cd75ad24196-square.png',
-      'https://fabrilife.com/products/650182af39a77-square.jpeg',
+      'https://i.ibb.co/C3wyFz1m/9704568.jpg',
+      'https://i.ibb.co/99StvG4m/7b194e97-ec5d-4e1c-b171-ba87bee42723.jpg',
+      'https://i.ibb.co/99StvG4m/7b194e97-ec5d-4e1c-b171-ba87bee42723.jpg',
+      'https://i.ibb.co/C3wyFz1m/9704568.jpg',
     ],
   };
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
