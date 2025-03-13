@@ -1,0 +1,378 @@
+[
+  {
+    "id": 1,
+    "name": "Blue Floral Polo",
+    "category": "kids",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "name": "Black T-Shirt",
+    "category": "men",
+    "price": 24.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "name": "White Pattern T-Shirt",
+    "category": "men",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 4,
+    "name": "Beige Polo",
+    "category": "men",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 5,
+    "name": "Blue Floral Shirt",
+    "category": "men",
+    "price": 32.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 6,
+    "name": "Purple Tee",
+    "category": "men",
+    "price": 18.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 7,
+    "name": "Light Blue Denim Shirt",
+    "category": "women",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 8,
+    "name": "Pink Dress",
+    "category": "kids",
+    "price": 27.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 9,
+    "name": "Colorful T-Shirt",
+    "category": "kids",
+    "price": 17.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 10,
+    "name": "Kids Jacket",
+    "category": "kids",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 11,
+    "name": "Women's Designer T-Shirt",
+    "category": "women",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 12,
+    "name": "Green T-Shirt",
+    "category": "women",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 13,
+    "name": "Pink T-Shirt",
+    "category": "women",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 14,
+    "name": "Purple Designer Top",
+    "category": "women",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 15,
+    "name": "Light Blue T-Shirt",
+    "category": "women",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 16,
+    "name": "Yellow Designer Top",
+    "category": "women",
+    "price": 36.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 17,
+    "name": "Pants",
+    "category": "men",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 18,
+    "name": "Women's Pajamas",
+    "category": "women",
+    "price": 45.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 19,
+    "name": "Comfy Trousers",
+    "category": "women",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 20,
+    "name": "Sports T-Shirt Red",
+    "category": "men",
+    "price": 24.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 21,
+    "name": "Green T-Shirt",
+    "category": "men",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 22,
+    "name": "Yellow T-Shirt",
+    "category": "men",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 23,
+    "name": "Grey Long Sleeve",
+    "category": "men",
+    "price": 32.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 24,
+    "name": "Black Hoodie",
+    "category": "men",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 25,
+    "name": "Red Summer Dress",
+    "category": "women",
+    "price": 44.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 26,
+    "name": "Classic Blue Jeans",
+    "category": "men",
+    "price": 54.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 28,
+    "name": "Denim Jacket",
+    "category": "women",
+    "price": 69.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 29,
+    "name": "Graphic Tee",
+    "category": "kids",
+    "price": 14.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 31,
+    "name": "Formal Blazer",
+    "category": "men",
+    "price": 89.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 32,
+    "name": "Elegant Handbag",
+    "category": "women",
+    "price": 74.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 33,
+    "name": "Leather Belt",
+    "category": "men",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 34,
+    "name": "Striped Pajama Set",
+    "category": "kids",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 36,
+    "name": "Winter Boots",
+    "category": "women",
+    "price": 84.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 37,
+    "name": "Winter Boots",
+    "category": "women",
+    "price": 84.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 38,
+    "name": "Monthly Best",
+    "category": "women",
+    "price": 84.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 39,
+    "name": "Casual Grey Hoodie",
+    "category": "men",
+    "price": 44.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 40,
+    "name": "Winter Jacket",
+    "category": "women",
+    "price": 59.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 41,
+    "name": "Slim Fit Jeans",
+    "category": "men",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 42,
+    "name": "Formal Blazer",
+    "category": "men",
+    "price": 69.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 43,
+    "name": "Pink Hoodie",
+    "category": "women",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 44,
+    "name": "Athletic Joggers",
+    "category": "men",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 45,
+    "name": "Summer Dress",
+    "category": "women",
+    "price": 42.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 46,
+    "name": "Boys' Sneakers",
+    "category": "kids",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 47,
+    "name": "Girls' Party Dress",
+    "category": "kids",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1568385247005-0d371d214a2c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  },
+  {
+    "id": 48,
+    "name": "Casual Shorts",
+    "category": "men",
+    "price": 27.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 49,
+    "name": "Stylish Scarf",
+    "category": "women",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1700748910236-3b744b8dacad?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": false
+  },
+  {
+    "id": 50,
+    "name": "Winter Gloves",
+    "category": "men",
+    "price": 15.99,
+    "image": "https://images.unsplash.com/photo-1621951753015-740c699ab970?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "featured": true
+  }
+]
