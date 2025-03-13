@@ -400,7 +400,7 @@ export function ProductForm() {
                                         <option value="">Select Sub-Category</option>
                                         {subCategories.map((subCategory) => (
                                             <option key={subCategory.link} value={subCategory.name}>
-                                                {subCategory.name} {subCategory.link} 
+                                                {subCategory.name}
                                             </option>
                                         ))}
                                         {customSubCategories.map((subCategory) => (
