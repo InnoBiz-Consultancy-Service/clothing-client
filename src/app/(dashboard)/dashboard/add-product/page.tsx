@@ -81,7 +81,7 @@ export default function ProductForm() {
   };
 
   return (
-    <div className="container mx-auto flex justify-center items-center lg:w-[1200px] lg:ml-14 p-6">
+    <div className=" ">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full bg-gradient-to-r from-[#d1d5db] to-[#7eb8d1] rounded-lg p-16 shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
