@@ -27,32 +27,32 @@ const Page = () => {
         'Typography & artworks are normal/ high density screenprint',
       ],
     },
-    size_chart: [
-      {
-        size: 'M',
-        chest_round: 39,
-        length: 27.5,
-        sleeve: 8.5,
-      },
-      {
-        size: 'L',
-        chest_round: 40.5,
-        length: 28,
-        sleeve: 8.75,
-      },
-      {
-        size: 'XL',
-        chest_round: 43,
-        length: 29,
-        sleeve: 9,
-      },
-      {
-        size: '2XL',
-        chest_round: 45,
-        length: 30,
-        sleeve: 9.25,
-      },
-    ],
+    // size_chart: [
+    //   {
+    //     size: 'M',
+    //     chest_round: 39,
+    //     length: 27.5,
+    //     sleeve: 8.5,
+    //   },
+    //   {
+    //     size: 'L',
+    //     chest_round: 40.5,
+    //     length: 28,
+    //     sleeve: 8.75,
+    //   },
+    //   {
+    //     size: 'XL',
+    //     chest_round: 43,
+    //     length: 29,
+    //     sleeve: 9,
+    //   },
+    //   {
+    //     size: '2XL',
+    //     chest_round: 45,
+    //     length: 30,
+    //     sleeve: 9.25,
+    //   },
+    // ],
     category: 'T-Shirt',
     brand: 'Fabrilife',
     images: [
@@ -149,7 +149,7 @@ const Page = () => {
         </div>
 
         {/* Size Chart Table */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <h4 className="font-bold text-lg text-gray-800 my-3">Size Chart - In Inches</h4>
           <table className="w-full border-collapse border border-gray-400 text-gray-700 text-sm">
             <thead>
@@ -171,7 +171,7 @@ const Page = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
         <div><Toaster /></div>
       </div>
     </div>
