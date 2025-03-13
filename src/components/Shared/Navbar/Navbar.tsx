@@ -1,23 +1,30 @@
 "use client"
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Menu, Search, ShoppingCart } from "lucide-react"
+import { Menu, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import NavItems from "./NavItems/NavItems"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import navLinks from "../../../../public/navLinks.json"
+import { Button } from "@/components/ui/button"
+import { navProps } from "@/types/navProps"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
+    const [navItems, setNavItems] = useState<navProps[]>([]);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         console.log("Searching for:", searchQuery)
         // Implement search functionality here
     }
+    useEffect(() => {
+        fetch('https://clothing-server-hazel.vercel.app/api/v1/navbar')
+            .then(res => res.json())
+            .then(data => setNavItems(data));
+    }, []);
 
     return (
         <header className="border-b border-gray-200 bg-white">
@@ -96,11 +103,10 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
-                    <Link href="/cart" className="relative">
-                        <ShoppingCart className="h-6 w-6" />
-                        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                            0
-                        </span>
+                    <Link href={'/dashboard'}>
+                        <Button variant="outline" className="text-gray-700 cursor-pointer">
+                            Dashboard
+                        </Button>
                     </Link>
 
                     {/* Mobile menu button */}
@@ -113,7 +119,7 @@ export default function Navbar() {
                         <SheetContent side="left" className="overflow-y-auto h-screen ">
                             <div className="p-4 mt-6">
                                 <Accordion type="single" collapsible>
-                                    {navLinks.map((category) => (
+                                    {navItems.map((category) => (
                                         <AccordionItem value={category.link} key={category.title} className="border-none">
                                             <AccordionTrigger className="cursor-pointer">
                                                 <h3 className="text-base font-semibold mb-2 ">{category.title}</h3>
