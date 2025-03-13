@@ -1,10 +1,11 @@
 "use client";
-
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Home, ChevronsLeft, ChevronsRight, FilePlus2, SquareChartGantt } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import logo from '../../../../public/clothing.png'
+import Image from "next/image";
 
 const menuItems = [
     { title: "Dashboard", icon: <Home size={20} />, path: "/dashboard" },
@@ -28,30 +29,41 @@ const Sidebar = () => {
                 {isCollapsed ? <ChevronsRight size={20} /> : <ChevronsLeft size={20} />}
             </button>
 
-            <ul className="space-y-2 mt-8">
-                {menuItems.map((item, index) => {
-                    // Check if current route is active
-                    const isActive = pathname === item.path;
+            <div>
+                <Link href={'/'}>
+                    <button className='flex items-center space-x-1 cursor-pointer'>
+                        <Image src={logo} width={40} height={40} alt="logo" />
+                        <p className={`${isCollapsed ? 'hidden' : 'flex'} space-x-1`}> <span className="bg-red-600 px-2 rounded text-white">Ten</span><span>Rus</span></p>
+                    </button>
+                </Link>
 
-                    return (
-                        <li key={index} className="relative group my-4">
-                            <Link
-                                href={item.path}
-                                className={`flex items-center space-x-2 p-2 rounded transition-all duration-300 ${isActive ? "bg-gray-700 text-white" : "hover:bg-gray-700 hover:text-white"
-                                    }`}
-                            >
-                                {item.icon}
-                                {!isCollapsed && <span>{item.title}</span>}
-                            </Link>
-                            {isCollapsed && (
-                                <span className="absolute left-12 top-1/2 transform -translate-y-1/2 px-2 py-1 text-sm bg-gray-700 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {item.title}
-                                </span>
-                            )}
-                        </li>
-                    );
-                })}
-            </ul>
+                <ul className="space-y-2 mt-8">
+                    {menuItems.map((item, index) => {
+                        // Check if current route is active
+                        const isActive = pathname === item.path;
+
+                        return (
+                            <>
+                                <li key={index} className="relative group my-4">
+                                    <Link
+                                        href={item.path}
+                                        className={`flex items-center space-x-2 p-2 rounded transition-all duration-300 ${isActive ? "bg-gray-700 text-white" : "hover:bg-gray-700 hover:text-white"
+                                            }`}
+                                    >
+                                        {item.icon}
+                                        {!isCollapsed && <span>{item.title}</span>}
+                                    </Link> 
+                                    {isCollapsed && (
+                                        <span className="absolute left-12 top-1/2 transform -translate-y-1/2 px-2 py-1 text-sm bg-gray-700 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                            {item.title}
+                                        </span>
+                                    )}
+                                </li>
+                            </>
+                        );
+                    })}
+                </ul>
+            </div>
             <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
             </Avatar>

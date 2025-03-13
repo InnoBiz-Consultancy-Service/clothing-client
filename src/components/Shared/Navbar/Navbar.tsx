@@ -98,7 +98,7 @@ export default function Navbar() {
                 {/* Cart */}
                 <div className="flex items-center gap-4">
                     <Link href={'/dashboard'}>
-                        <Button variant="outline" className="text-gray-700">
+                        <Button variant="outline" className="text-gray-700 cursor-pointer">
                             Dashboard
                         </Button>
                     </Link>

@@ -1,5 +1,6 @@
+import SearchBar from "@/components/Dashboard/SearchBar/SearchBar";
 import Slider from "@/components/Dashboard/Slider/Slider";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
     children,
@@ -7,15 +8,19 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className="flex">
-                <SidebarProvider>
+        <div className="flex h-screen overflow-hidden">
+            <SidebarProvider>
+                <div className="h-screen">
                     <Slider />
-                    <main>
-                        {children}
-                    </main>
-                </SidebarProvider>
-            </body>
-        </html>
-    );
+                </div>
+                <SidebarInset className="flex-1 overflow-auto">
+                    <header className="flex h-16 items-center gap-4 border-b px-6 sticky top-0 bg-background z-10">
+                        <SearchBar />
+                    </header>
+                    <main className="p-6">{children}</main>
+                </SidebarInset>
+            </SidebarProvider>
+        </div>
+    )
 }
+
