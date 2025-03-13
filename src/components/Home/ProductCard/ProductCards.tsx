@@ -112,7 +112,7 @@ const ProductCards = () => {
           NEW ARRIVAL
         </h1>
         <div className="flex gap-4 flex-col md:flex-row">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 flex-grow">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 flex-grow">
             {clothingData.map((item) => (
               <ProductCard item={item} key={item.id} />
             ))}
