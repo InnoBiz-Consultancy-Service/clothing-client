@@ -108,9 +108,12 @@ const ProductCards = () => {
   return (
     <main className="bg-gray-100">
       <div className="container mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold text-orange-600 bg-orange-100 m-2 p-8 text-center">
-          NEW ARRIVAL
-        </h1>
+        <header className="mb-6 text-center">
+          <h2 className="text-3xl uppercase font-semibold tracking-wider text-gray-800 uppercase">
+          new arrival
+          </h2>
+          <div className="w-20 h-[2px] bg-gray-400 mx-auto mt-1 mb-2"></div>
+        </header>
         <div className="flex gap-4 flex-col md:flex-row">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 flex-grow">
             {clothingData.map((item) => (
