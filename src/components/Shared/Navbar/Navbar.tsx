@@ -2,13 +2,16 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Menu, Search } from "lucide-react"
+import { Menu, Search, ShoppingCart } from "lucide-react"
 import { cn } from "@/lib/utils"
 import NavItems from "./NavItems/NavItems"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { navProps } from "@/types/navProps"
+import getNavbarData from "@/apiAction/getNavbarData"
+import logo from '../../../../public/clothing.png'
+import Image from "next/image"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
@@ -19,11 +22,14 @@ export default function Navbar() {
         e.preventDefault()
         console.log("Searching for:", searchQuery)
         // Implement search functionality here
+        // TO DO
     }
     useEffect(() => {
-        fetch('https://clothing-server-hazel.vercel.app/api/v1/navbar')
-            .then(res => res.json())
-            .then(data => setNavItems(data));
+        const navbarData = async () => {
+            const data = await getNavbarData();
+            setNavItems(data);
+        };
+        navbarData();
     }, []);
 
     return (
@@ -31,23 +37,8 @@ export default function Navbar() {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="text-black">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                            <polyline points="14 2 14 8 20 8" />
-                        </svg>
-                    </div>
-                    <span className="text-xl font-bold tracking-tight">CLOTHING</span>
+                    <Image src={logo} width={30} height={30} alt="Ten Rush" />
+                    <p className='space-x-1 text-lg'> <span className="bg-red-600 px-2 rounded text-white">Ten</span><span>Rus</span></p>
                 </Link>
 
                 {/* Navigation */}
@@ -103,6 +94,12 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
+
+                    <Link href={'/OrderBulk'}>
+                        <Button variant="outline" className="text-gray-700 cursor-pointer">
+                            <ShoppingCart /> Order Bulk
+                        </Button>
+                    </Link>
                     <Link href={'/dashboard'}>
                         <Button variant="outline" className="text-gray-700 cursor-pointer">
                             Dashboard
