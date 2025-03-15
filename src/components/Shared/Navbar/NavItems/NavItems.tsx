@@ -1,4 +1,5 @@
 "use client"
+import getNavbarData from "@/apiAction/getNavbarData";
 import { navProps } from "@/types/navProps";
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -11,9 +12,11 @@ interface NavItemsProps {
 export default function NavItems({ isOpen }: NavItemsProps) {
     const [navData, setNavData] = useState<navProps[]>([]);
     useEffect(() => {
-        fetch('https://clothing-server-hazel.vercel.app/api/v1/navbar')
-            .then(res => res.json())
-            .then(data => setNavData(data));
+        const navbarData = async () => {
+            const data = await getNavbarData();
+            setNavData(data);
+        };
+        navbarData();
     }, []);
     // console.log(navData)
     if (!isOpen) return null
