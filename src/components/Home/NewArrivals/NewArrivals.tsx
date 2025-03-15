@@ -28,7 +28,7 @@ const NewArrivals: React.FC<ProductProps> = () => {
     return (
         <>
             {
-                newProducts.map((item: ProductProps) => (
+                newProducts?.map((item: ProductProps) => (
                     <Card key={item._id} className="overflow-hidden w-full max-w-sm transition-all duration-300 hover:shadow-xl border-0 shadow-md rounded">
                         <CardHeader className="p-0">
                             <div className="relative h-64 rounded-t w-full overflow-hidden group">

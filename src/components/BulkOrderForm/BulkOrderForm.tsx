@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
 import { PhoneInput } from "./PhoneInput/PhoneInput"
+import axios from "axios"
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -43,6 +44,18 @@ export default function ContactForm() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
         // TO DO: ekhane database a data pathanor function implement hobe, and sathe nodeMailer function o hobe...
+        try {
+            // API-এ POST রিকুয়েস্ট পাঠান
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`, values);
+
+            // সফল রেসপন্স হ্যান্ডেল করুন
+            console.log("Order saved and emails sent:", response.data);
+            alert("Order submitted successfully!");
+        } catch (error) {
+            // এরর হ্যান্ডেল করুন
+            console.error("Error submitting order:", error);
+            alert("Failed to submit order. Please try again.");
+        }
 
     }
 
