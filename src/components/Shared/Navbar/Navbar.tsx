@@ -12,11 +12,14 @@ import { navProps } from "@/types/navProps"
 import getNavbarData from "@/apiAction/getNavbarData"
 import logo from '../../../../public/clothing.png'
 import Image from "next/image"
+import { useSession,signOut  } from "next-auth/react"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [navItems, setNavItems] = useState<navProps[]>([]);
+    const session = useSession();
+
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
@@ -100,11 +103,28 @@ export default function Navbar() {
                             <ShoppingCart /> Order Bulk
                         </Button>
                     </Link>
-                    <Link href={'/dashboard'}>
-                        <Button variant="outline" className="text-gray-700 cursor-pointer">
-                            Dashboard
-                        </Button>
-                    </Link>
+
+
+                    {session.status === "authenticated" ? (
+                        <>
+                            <Link href={'/dashboard'}>
+                                <Button variant="outline" className="text-gray-700 cursor-pointer">
+                                    Dashboard
+                                </Button>
+                                <Button variant="outline" className="text-gray-700 cursor-pointer" onClick={() => signOut()}>
+                                    Logout
+                                </Button>
+                            </Link>
+                        </>
+                    ) : (
+                        <Link href={'/login'}>
+                            <Button variant="outline" className="text-gray-700 cursor-pointer">
+                                Login
+                            </Button>
+                        </Link>
+
+                    )}
+
 
                     {/* Mobile menu button */}
                     <Sheet>

@@ -2,10 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Eye, EyeOff, Lock, Mail } from "lucide-react"
+import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,6 +28,7 @@ const formSchema = z.object({
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Initialize the form with React Hook Form and Zod validation
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,6 +44,24 @@ const LoginPage = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     // TO DO: ekhane login function implement hobe...
+    setIsLoading(true);
+    const result = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      // TO DO: alart er poriborte toast use kora lagbe...
+      console.error("Login failed:", result.error);
+      alert(result.error || "Login failed. Please try again.");
+    } else {
+      // Login successful
+       // TO DO: alart er poriborte toast use kora lagbe...
+      console.log("Login successful");
+      window.location.href = "/";
+    }
+    setIsLoading(false);
   }
 
   const togglePasswordVisibility = () => {
@@ -124,8 +144,12 @@ const LoginPage = () => {
                   <Button
                     type="submit"
                     className="w-full cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700"
+                    disabled={isLoading}
                   >
-                    Login
+                    {isLoading ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : null}
+                    {isLoading ? "Processing..." : "Login"}
                   </Button>
 
                 </form>

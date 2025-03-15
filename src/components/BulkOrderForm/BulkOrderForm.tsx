@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
 import { PhoneInput } from "./PhoneInput/PhoneInput"
 import axios from "axios"
+import { useState } from "react"
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -41,21 +42,23 @@ export default function ContactForm() {
         },
     })
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-        // TO DO: ekhane database a data pathanor function implement hobe, and sathe nodeMailer function o hobe...
-        try {
-            // API-এ POST রিকুয়েস্ট পাঠান
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`, values);
+    const [isLoading, setIsLoading] = useState(false)
 
-            // সফল রেসপন্স হ্যান্ডেল করুন
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsLoading(true)
+        
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`, values);
+            form.reset();
             console.log("Order saved and emails sent:", response.data);
+            // TO DO: Ai khane ekta alert dite hobe je order submit hoise...
             alert("Order submitted successfully!");
+
         } catch (error) {
-            // এরর হ্যান্ডেল করুন
             console.error("Error submitting order:", error);
             alert("Failed to submit order. Please try again.");
         }
+        setIsLoading(false)
 
     }
 
@@ -205,8 +208,13 @@ export default function ContactForm() {
                                 )}
                             />
 
-                            <Button type="submit" className="w-full">
-                                Submit
+                            <Button
+                                type="submit"
+                                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 cursor-pointer"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                {isLoading ? "Submitting..." : "Submit Order"}
                             </Button>
                         </form>
                     </Form>
