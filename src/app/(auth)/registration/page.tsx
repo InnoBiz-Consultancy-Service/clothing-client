@@ -3,11 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
-import { Mail, Phone } from "lucide-react"
+import { Loader2, Mail, Phone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
 
 const formSchema = z
     .object({
@@ -54,9 +55,40 @@ export default function RegistrationPage() {
         mode: "onChange",
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    const [isLoading, setIsLoading] = useState(false)
+
+    // handle form submission
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
-        // TO DO: ekhane registration function implement hobe...
+        // TO DO: Done
+        setIsLoading(true)
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                //To DO: Ai khane alert er poriborte toast use kora jabe...
+                alert("Registration successful")
+                form.reset()
+            } else {
+                //To DO: ai khane alert er poriborte toast use kora jabe...
+                alert("Registration failed")
+                console.error("Registration Error:", data)
+            }
+        } catch (error) {
+            // To DO: Ai khane alert er poriborte toast use kora jabe...
+            alert("An error occurred")
+            console.error("Error:", error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -144,8 +176,11 @@ export default function RegistrationPage() {
                         )}
                     />
 
-                    <Button type="submit" className="w-full cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700">
-                        Create Account
+                    <Button type="submit" className="w-full cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700" disabled={isLoading}>
+
+                        {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                        {isLoading ? "Account Creating..." : "Create Account"}
+
                     </Button>
                 </form>
             </Form>
