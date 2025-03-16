@@ -30,7 +30,8 @@ export default function NavItems({ isOpen }: NavItemsProps) {
                             <div className="space-y-2">
                                 {category.items.map((item) => (
                                     <Link
-                                        href={item.link}
+                                        href="/[category]/[subCategory]"
+                                        as={`/${category.title}/${item.name}`}
                                         key={item.name}
                                         className="block text-sm text-gray-600 hover:text-black transition-colors"
                                     >
