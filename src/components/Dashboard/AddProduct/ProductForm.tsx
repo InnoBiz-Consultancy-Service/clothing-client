@@ -8,6 +8,7 @@ import * as z from "zod"
 import Image from "next/image"
 import { X, Upload, ImageIcon, Plus } from "lucide-react"
 import { toast, Toaster } from "react-hot-toast"
+import axios from "axios"
 
 const schema = z.object({
     name: z.string().min(3, "Product name must be at least 3 characters long"),
@@ -75,22 +76,46 @@ export function ProductForm() {
     })
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files
-        if (files) {
-            if (imageUrls.length + files.length > 3) {
-                toast.error("You can only upload up to 3 images")
-                return
-            }
-            const newImageUrls = [...imageUrls]
-            Array.from(files).forEach((file) => {
-                const newImageUrl = URL.createObjectURL(file)
-                newImageUrls.push(newImageUrl)
-            })
-
-            setImageUrls(newImageUrls)
-            setValue("images", newImageUrls)
+        const files = event.target.files;
+        if (!files) return;
+    
+        if (imageUrls.length + files.length > 3) {
+            toast.error("You can only upload up to 3 images");
+            return;
         }
-    }
+    
+        const newImageUrls = [...imageUrls];
+    
+        
+    
+        const uploadPromises = Array.from(files).map(async (file) => {
+            const formData = new FormData();
+            formData.append("image", file);
+    
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_HOSTING_KEY}`, {
+                    method: "POST",
+                    body: formData,
+                });
+    
+                const data = await response.json();
+                if (data.success) {
+                    newImageUrls.push(data.data.url); 
+                } else {
+                    toast.error("Image upload failed!");
+                }
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                toast.error("Something went wrong while uploading!");
+            }
+        });
+    
+        await Promise.all(uploadPromises); 
+    
+        setImageUrls(newImageUrls);
+        setValue("images", newImageUrls);
+    };
+    
 
     const removeImage = (index: number) => {
         const newImageUrls = [...imageUrls]
@@ -107,10 +132,14 @@ export function ProductForm() {
             toast.success("Product submitted successfully!")
             setIsSubmitting(false)
         }, 1500)
+        console.log(data)
+        axios.post('http://localhost:8000/api/v1/products',data)
+        .then(res=> console.log(res))
     }
 
     useEffect(() => {
-        fetch("https://clothing-server-hazel.vercel.app/api/v1/navbar")
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/navbar`)
+
             .then((res) => res.json())
             .then((data) => setNavbar(data))
             .catch((err) => {
@@ -266,7 +295,7 @@ export function ProductForm() {
                             <div>
                                 <label className="block text-sm font-medium mb-1">Sizes</label>
                                 <div className="grid grid-cols-3 gap-2 mb-2">
-                                    {availableSizes.map((size) => (
+                                    {availableSizes?.map((size) => (
                                         <label
                                             key={size}
                                             className="flex items-center space-x-2 border p-2 rounded-md cursor-pointer hover:bg-gray-50"
