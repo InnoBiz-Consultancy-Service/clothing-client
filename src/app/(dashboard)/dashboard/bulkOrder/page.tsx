@@ -33,10 +33,10 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className=" rounded-lg  h-[80vh] overflow-hidden">
+      <div className=" rounded-lg  h-[80vh] ">
       
-        <div className="h-full overflow-y-auto">
-          <div className="overflow-auto">
+        <div className="h-full">
+          <div className="">
             <table className="w-full min-w-max bg-white">
               <thead className="sticky top-0 text-white bg-gradient-to-r from-gray-800 to-purple-700 shadow">
                 <tr className="border-b">
