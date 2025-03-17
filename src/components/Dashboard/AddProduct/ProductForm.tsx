@@ -13,7 +13,7 @@ import axios from "axios"
 const schema = z.object({
     name: z.string().min(3, "Product name must be at least 3 characters long"),
     price: z.coerce.number().min(1, "Price must be at least 1"),
-    discount: z.coerce.number().min(0, "Discount cannot be negative"),
+    // discount: z.coerce.number().min(0, "Discount cannot be negative"),
     description: z.string().min(10, "Description must be at least 10 characters long"),
     sizes: z.array(z.string()).min(1, "At least one size must be selected"),
     colors: z.string().min(3, "Color must be at least 3 characters"),
@@ -65,7 +65,7 @@ export function ProductForm() {
         defaultValues: {
             name: "",
             price: 0,
-            discount: 0,
+            // discount: 0,
             description: "",
             sizes: [],
             colors: "",
@@ -133,7 +133,7 @@ export function ProductForm() {
             setIsSubmitting(false)
         }, 1500)
         console.log(data)
-        axios.post('http://localhost:8000/api/v1/products',data)
+        axios.post('http://localhost:8000/api/v1/products/add-product',data)
         .then(res=> console.log(res))
     }
 
@@ -267,7 +267,7 @@ export function ProductForm() {
                                     />
                                     {errors.price && <p className="mt-1 text-sm text-red-500">{errors.price.message}</p>}
                                 </div>
-                                <div>
+                                {/* <div>
                                     <label className="block text-sm font-medium mb-1">Discount</label>
                                     <input
                                         type="number"
@@ -277,7 +277,7 @@ export function ProductForm() {
                                         disabled={isSubmitting}
                                     />
                                     {errors.discount && <p className="mt-1 text-sm text-red-500">{errors.discount.message}</p>}
-                                </div>
+                                </div> */}
                             </div>
 
                             <div>

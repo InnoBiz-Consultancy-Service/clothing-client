@@ -22,10 +22,11 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="border border-gray-300 rounded-lg shadow-md overflow-hidden">
-        <div className="max-h-[80vh] overflow-y-auto">
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
+      <div className=" rounded-lg  h-[80vh] overflow-hidden">
+      
+        <div className="h-full overflow-y-auto">
+          <div className="overflow-auto">
+            <table className="w-full min-w-max bg-white">
               <thead className="sticky top-0 text-white bg-gradient-to-r from-gray-800 to-purple-700 shadow">
                 <tr className="border-b">
                   <th className="p-3 border">Name</th>
@@ -47,24 +48,19 @@ const Page = () => {
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
-                              className="bg-gradient-to-r from-[#5652ca] to-[#73145b]  hover:from-[#73145b] hover:to-[#5652ca] "
+                              className="bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca]"
                               onClick={() => setSelectedOrder(order)}
                             >
                               View Details
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-lg mx-auto">
+                          <DialogContent className="max-w-l mx-auto">
                             <DialogHeader>
                               <DialogTitle>Order Details</DialogTitle>
                               <DialogDescription>
                                 {selectedOrder && (
                                   <div className="space-y-2 overflow-y-auto max-h-[60vh] p-2">
-                                    <p>
-                                      <strong className="text-black">
-                                        Product ID:
-                                      </strong>{" "}
-                                      {selectedOrder._id}
-                                    </p>
+                                    
                                     <p>
                                       <strong className="text-black">
                                         Name:
