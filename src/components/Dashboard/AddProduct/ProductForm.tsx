@@ -8,11 +8,12 @@ import * as z from "zod"
 import Image from "next/image"
 import { X, Upload, ImageIcon, Plus } from "lucide-react"
 import { toast, Toaster } from "react-hot-toast"
+import axios from "axios"
 
 const schema = z.object({
     name: z.string().min(3, "Product name must be at least 3 characters long"),
     price: z.coerce.number().min(1, "Price must be at least 1"),
-    discount: z.coerce.number().min(0, "Discount cannot be negative"),
+    // discount: z.coerce.number().min(0, "Discount cannot be negative"),
     description: z.string().min(10, "Description must be at least 10 characters long"),
     sizes: z.array(z.string()).min(1, "At least one size must be selected"),
     colors: z.string().min(3, "Color must be at least 3 characters"),
@@ -53,18 +54,19 @@ export function ProductForm() {
     const [showAddCategory, setShowAddCategory] = useState<boolean>(false)
     const [showAddSubCategory, setShowAddSubCategory] = useState<boolean>(false)
 
-    const {
+    const  {
         register,
         handleSubmit,
         setValue,
         watch,
         formState: { errors },
+        reset,
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
             name: "",
             price: 0,
-            discount: 0,
+            // discount: 0,
             description: "",
             sizes: [],
             colors: "",
@@ -75,22 +77,46 @@ export function ProductForm() {
     })
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files
-        if (files) {
-            if (imageUrls.length + files.length > 3) {
-                toast.error("You can only upload up to 3 images")
-                return
-            }
-            const newImageUrls = [...imageUrls]
-            Array.from(files).forEach((file) => {
-                const newImageUrl = URL.createObjectURL(file)
-                newImageUrls.push(newImageUrl)
-            })
-
-            setImageUrls(newImageUrls)
-            setValue("images", newImageUrls)
+        const files = event.target.files;
+        if (!files) return;
+    
+        if (imageUrls.length + files.length > 3) {
+            toast.error("You can only upload up to 3 images");
+            return;
         }
-    }
+    
+        const newImageUrls = [...imageUrls];
+    
+        
+    
+        const uploadPromises = Array.from(files).map(async (file) => {
+            const formData = new FormData();
+            formData.append("image", file);
+    
+            try {
+                const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_HOSTING_KEY}`, {
+                    method: "POST",
+                    body: formData,
+                });
+    
+                const data = await response.json();
+                if (data.success) {
+                    newImageUrls.push(data.data.url); 
+                } else {
+                    toast.error("Image upload failed!");
+                }
+            } catch (error) {
+                console.error("Error uploading image:", error);
+                toast.error("Something went wrong while uploading!");
+            }
+        });
+    
+        await Promise.all(uploadPromises); 
+    
+        setImageUrls(newImageUrls);
+        setValue("images", newImageUrls);
+    };
+    
 
     const removeImage = (index: number) => {
         const newImageUrls = [...imageUrls]
@@ -99,18 +125,46 @@ export function ProductForm() {
         setValue("images", newImageUrls)
     }
 
+   
     const onSubmit = (data: FormData) => {
-        setIsSubmitting(true)
-        // Simulate API call
-        setTimeout(() => {
-            console.log(data)
-            toast.success("Product submitted successfully!")
-            setIsSubmitting(false)
-        }, 1500)
-    }
+        setIsSubmitting(true);
+    
+    
+        const formattedImages = data.images.map((url, index) => {
+            return { [`img${index + 1}`]: url };
+        });
+    
 
+        const postData = {
+            ...data,
+            images: formattedImages,
+        };
+    
+   
+        setTimeout(() => {
+            console.log(postData);
+            toast.success("Product submitted successfully!");
+            setIsSubmitting(false);
+        }, 1500);
+    
+        
+        axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/products/add-product`, postData)
+            .then(res => { if(res.status === 200 ){
+                
+                reset()
+              
+                toast.success("Product Submitted Successfully")
+            }
+                console.log(res)})
+            .catch(err => {
+                console.error("Error submitting product:", err);
+                toast.error("Error submitting product");
+                setIsSubmitting(false);
+            });
+    };
     useEffect(() => {
-        fetch("https://clothing-server-hazel.vercel.app/api/v1/navbar")
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/navbar`)
+
             .then((res) => res.json())
             .then((data) => setNavbar(data))
             .catch((err) => {
@@ -226,7 +280,7 @@ export function ProductForm() {
                                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className=" gap-4">
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Price</label>
                                     <input
@@ -238,7 +292,7 @@ export function ProductForm() {
                                     />
                                     {errors.price && <p className="mt-1 text-sm text-red-500">{errors.price.message}</p>}
                                 </div>
-                                <div>
+                                {/* <div>
                                     <label className="block text-sm font-medium mb-1">Discount</label>
                                     <input
                                         type="number"
@@ -248,7 +302,7 @@ export function ProductForm() {
                                         disabled={isSubmitting}
                                     />
                                     {errors.discount && <p className="mt-1 text-sm text-red-500">{errors.discount.message}</p>}
-                                </div>
+                                </div> */}
                             </div>
 
                             <div>
@@ -266,7 +320,7 @@ export function ProductForm() {
                             <div>
                                 <label className="block text-sm font-medium mb-1">Sizes</label>
                                 <div className="grid grid-cols-3 gap-2 mb-2">
-                                    {availableSizes.map((size) => (
+                                    {availableSizes?.map((size) => (
                                         <label
                                             key={size}
                                             className="flex items-center space-x-2 border p-2 rounded-md cursor-pointer hover:bg-gray-50"
@@ -567,4 +621,3 @@ export function ProductForm() {
         </div>
     )
 }
-

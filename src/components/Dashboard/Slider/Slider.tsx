@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Home, ChevronsLeft, ChevronsRight, FilePlus2, SquareChartGantt } from "lucide-react";
+import { Home, ChevronsLeft, ChevronsRight, FilePlus2, SquareChartGantt, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import logo from '../../../../public/clothing.png'
@@ -10,6 +10,7 @@ import Image from "next/image";
 const menuItems = [
     { title: "Dashboard", icon: <Home size={20} />, path: "/dashboard" },
     { title: "Add Product", icon: <FilePlus2 size={20} />, path: "/dashboard/add-product" },
+    { title: "BulkOrder", icon: <ShoppingCart size={20} />, path: "/dashboard/bulkOrder" },
     { title: "All Product", icon: <SquareChartGantt size={20} />, path: "/dashboard/all-product" },
 ];
 
