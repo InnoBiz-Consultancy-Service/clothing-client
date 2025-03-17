@@ -11,11 +11,22 @@ import {
 import { Button } from "@/components/ui/button";
 
 const Page = () => {
-  const [orderData, setOrderData] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  interface Order {
+    name: string;
+    email: string;
+    company: string;
+    productType: string;
+    phone?: string;
+    quantity?: number;
+    deliveryDate?: string;
+    description?: string;
+  }
+  
+  const [orderData, setOrderData] = useState<Order[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/bulkOrder")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`)
       .then((res) => res.json())
       .then((data) => setOrderData(data));
   }, []);
@@ -120,7 +131,7 @@ const Page = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="text-center p-4">
+                    <td colSpan={5} className="text-center p-4">
                       No orders available
                     </td>
                   </tr>

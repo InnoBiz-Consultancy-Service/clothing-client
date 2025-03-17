@@ -54,12 +54,13 @@ export function ProductForm() {
     const [showAddCategory, setShowAddCategory] = useState<boolean>(false)
     const [showAddSubCategory, setShowAddSubCategory] = useState<boolean>(false)
 
-    const {
+    const  {
         register,
         handleSubmit,
         setValue,
         watch,
         formState: { errors },
+        reset,
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -124,21 +125,45 @@ export function ProductForm() {
         setValue("images", newImageUrls)
     }
 
+   
     const onSubmit = (data: FormData) => {
-        setIsSubmitting(true)
-        // Simulate API call
-        setTimeout(() => {
-            console.log(data)
-            toast.success("Product submitted successfully!")
-            setIsSubmitting(false)
-        }, 1500)
-        console.log(data)
-        axios.post('http://localhost:8000/api/v1/products/add-product',data)
-        .then(res=> console.log(res))
-    }
+        setIsSubmitting(true);
+    
+    
+        const formattedImages = data.images.map((url, index) => {
+            return { [`img${index + 1}`]: url };
+        });
+    
 
+        const postData = {
+            ...data,
+            images: formattedImages,
+        };
+    
+   
+        setTimeout(() => {
+            console.log(postData);
+            toast.success("Product submitted successfully!");
+            setIsSubmitting(false);
+        }, 1500);
+    
+        
+        axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/products/add-product`, postData)
+            .then(res => { if(res.status === 200 ){
+                
+                reset()
+              
+                toast.success("Product Submitted Successfully")
+            }
+                console.log(res)})
+            .catch(err => {
+                console.error("Error submitting product:", err);
+                toast.error("Error submitting product");
+                setIsSubmitting(false);
+            });
+    };
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/navbar`)
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/navbar`)
 
             .then((res) => res.json())
             .then((data) => setNavbar(data))
@@ -255,7 +280,7 @@ export function ProductForm() {
                                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className=" gap-4">
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Price</label>
                                     <input
@@ -596,4 +621,3 @@ export function ProductForm() {
         </div>
     )
 }
-
