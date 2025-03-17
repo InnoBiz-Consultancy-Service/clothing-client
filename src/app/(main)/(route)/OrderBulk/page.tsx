@@ -1,3 +1,4 @@
+import BulkOrderForm from "@/components/BulkOrderForm/BulkOrderForm";
 import OrderSlider from "@/components/OrderBulk/OrderSlider";
 import ProductLineup from "@/components/OrderBulk/ProductLineup";
 import React from "react";
@@ -22,6 +23,7 @@ const Page = () => {
       {/* Other Components */}
       <OrderSlider />
       <ProductLineup />
+      <BulkOrderForm />
     </div>
   );
 };

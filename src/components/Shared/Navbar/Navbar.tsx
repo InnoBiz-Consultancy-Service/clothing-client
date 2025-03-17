@@ -2,28 +2,37 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Menu, Search } from "lucide-react"
+import { Menu, Search, ShoppingCart } from "lucide-react"
 import { cn } from "@/lib/utils"
 import NavItems from "./NavItems/NavItems"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { navProps } from "@/types/navProps"
+import getNavbarData from "@/apiAction/getNavbarData"
+import logo from '../../../../public/clothing.png'
+import Image from "next/image"
+import { useSession, signOut } from "next-auth/react"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [navItems, setNavItems] = useState<navProps[]>([]);
+    const session = useSession();
+
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         console.log("Searching for:", searchQuery)
         // Implement search functionality here
+        // TO DO
     }
     useEffect(() => {
-        fetch('https://clothing-server-hazel.vercel.app/api/v1/navbar')
-            .then(res => res.json())
-            .then(data => setNavItems(data));
+        const navbarData = async () => {
+            const data = await getNavbarData();
+            setNavItems(data);
+        };
+        navbarData();
     }, []);
 
     return (
@@ -31,58 +40,36 @@ export default function Navbar() {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="text-black">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                            <polyline points="14 2 14 8 20 8" />
-                        </svg>
-                    </div>
-                    <span className="text-xl font-bold tracking-tight">CLOTHING</span>
+                    <Image src={logo} width={30} height={30} alt="Ten Rush" />
+                    <p className='space-x-1 text-lg'> <span className="bg-red-600 px-2 rounded text-white">Ten</span><span>Rus</span></p>
                 </Link>
 
                 {/* Navigation */}
                 <nav className="hidden md:flex items-center gap-6">
                     <div className="relative" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>
-                        <button className="flex cursor-pointer items-center gap-1 px-2 py-2 text-sm font-medium">
-                            Shop
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className={cn("transition-transform", isShopOpen ? "rotate-180" : "")}
-                            >
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
+                        <Link className="hover:text-red-600" href={'/shop'}>
+                            <button className="flex cursor-pointer items-center gap-1 px-2 py-2 text-sm font-medium">
+                                Shop
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className={cn("transition-transform", isShopOpen ? "rotate-180" : "")}
+                                >
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </Link>
 
                         {/* Dropdown Menu */}
                         {isShopOpen && <NavItems isOpen={isShopOpen} />}
                     </div>
-                    <Link href="/new-arrivals" className="px-2 py-2 text-sm font-medium">
-                        New Arrivals
-                    </Link>
-                    <Link href="/collections" className="px-2 py-2 text-sm font-medium">
-                        Collections
-                    </Link>
-                    <Link href="/about" className="px-2 py-2 text-sm font-medium">
-                        About
-                    </Link>
                 </nav>
 
                 {/* Search Bar */}
@@ -103,11 +90,34 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
-                    <Link href={'/dashboard'}>
+
+                    <Link href={'/OrderBulk'}>
                         <Button variant="outline" className="text-gray-700 cursor-pointer">
-                            Dashboard
+                            <ShoppingCart /> Order Bulk
                         </Button>
                     </Link>
+
+
+                    {session.status === "authenticated" ? (
+                        <>
+                            <Link href={'/dashboard'}>
+                                <Button variant="outline" className="text-gray-700 cursor-pointer">
+                                    Dashboard
+                                </Button>
+                                <Button variant="outline" className="text-gray-700 cursor-pointer" onClick={() => signOut()}>
+                                    Logout
+                                </Button>
+                            </Link>
+                        </>
+                    ) : (
+                        <Link href={'/login'}>
+                            <Button variant="outline" className="text-gray-700 cursor-pointer">
+                                Login
+                            </Button>
+                        </Link>
+
+                    )}
+
 
                     {/* Mobile menu button */}
                     <Sheet>
