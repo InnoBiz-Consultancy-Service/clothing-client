@@ -32,7 +32,7 @@ const Page = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      // Convert "KIDS (GIRLS)" or "KIDS (BOYS)" to "Kids" for the API query
+  
       const queryCategory =
         selectedCategory === "KIDS (GIRLS)" || selectedCategory === "KIDS (BOYS)"
           ? "Kids"
@@ -59,7 +59,7 @@ const Page = () => {
   navbar.forEach((item) => {
     let tabTitle = item.title;
     if (tabTitle === "KIDS (GIRLS)" || tabTitle === "KIDS (BOYS)") {
-      tabTitle = "Kids";
+      tabTitle = "KIDS";
     }
     if (!addedTabs.has(tabTitle)) {
       processedNavItems.push({ _id: tabTitle.toLowerCase(), title: tabTitle });
@@ -84,7 +84,7 @@ const Page = () => {
           <button
             key={nav._id}
             onClick={() => setSelectedCategory(nav.title)}
-            className={`px-4 py-2 rounded-md ${
+            className={`px-4 py-2 hover:cursor-pointer  rounded-md ${
               selectedCategory === nav.title ? "bg-gray-900 text-white" : "bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca] text-white"
             }`}
           >
@@ -114,7 +114,7 @@ const Page = () => {
                     <td className="py-2 px-4 border-b">
                       <button
                         onClick={() => openModal(product)}
-                        className="px-4 py-2 bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca] text-white rounded-lg"
+                        className="px-4 hover:cursor-pointer  py-2 bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca] text-white rounded-lg"
                       >
                         View Details
                       </button>
@@ -142,7 +142,7 @@ const Page = () => {
             <p><strong>Description:</strong> {selectedProduct.description || "No description available."}</p>
             <button
               onClick={closeModal}
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              className="mt-4 hover:cursor-pointer px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
             >
               Close
             </button>
