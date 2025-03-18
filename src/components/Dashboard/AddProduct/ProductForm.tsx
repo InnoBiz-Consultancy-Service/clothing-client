@@ -13,7 +13,6 @@ import axios from "axios"
 const schema = z.object({
     name: z.string().min(3, "Product name must be at least 3 characters long"),
     price: z.coerce.number().min(1, "Price must be at least 1"),
-    // discount: z.coerce.number().min(0, "Discount cannot be negative"),
     description: z.string().min(10, "Description must be at least 10 characters long"),
     sizes: z.array(z.string()).min(1, "At least one size must be selected"),
     colors: z.string().min(3, "Color must be at least 3 characters"),
@@ -54,7 +53,7 @@ export function ProductForm() {
     const [showAddCategory, setShowAddCategory] = useState<boolean>(false)
     const [showAddSubCategory, setShowAddSubCategory] = useState<boolean>(false)
 
-    const  {
+    const {
         register,
         handleSubmit,
         setValue,
@@ -66,7 +65,6 @@ export function ProductForm() {
         defaultValues: {
             name: "",
             price: 0,
-            // discount: 0,
             description: "",
             sizes: [],
             colors: "",
@@ -79,29 +77,27 @@ export function ProductForm() {
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (!files) return;
-    
+
         if (imageUrls.length + files.length > 3) {
             toast.error("You can only upload up to 3 images");
             return;
         }
-    
+
         const newImageUrls = [...imageUrls];
-    
-        
-    
+
         const uploadPromises = Array.from(files).map(async (file) => {
             const formData = new FormData();
             formData.append("image", file);
-    
+
             try {
                 const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_HOSTING_KEY}`, {
                     method: "POST",
                     body: formData,
                 });
-    
+
                 const data = await response.json();
                 if (data.success) {
-                    newImageUrls.push(data.data.url); 
+                    newImageUrls.push(data.data.url);
                 } else {
                     toast.error("Image upload failed!");
                 }
@@ -110,13 +106,12 @@ export function ProductForm() {
                 toast.error("Something went wrong while uploading!");
             }
         });
-    
-        await Promise.all(uploadPromises); 
-    
+
+        await Promise.all(uploadPromises);
+
         setImageUrls(newImageUrls);
         setValue("images", newImageUrls);
     };
-    
 
     const removeImage = (index: number) => {
         const newImageUrls = [...imageUrls]
@@ -125,46 +120,49 @@ export function ProductForm() {
         setValue("images", newImageUrls)
     }
 
-   
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
+        console.log("Form Data:", data); // Debugging
         setIsSubmitting(true);
-    
-    
-        const formattedImages = data.images.map((url, index) => {
-            return { [`img${index + 1}`]: url };
-        });
-    
 
-        const postData = {
-            ...data,
-            images: formattedImages,
-        };
-    
-   
-        setTimeout(() => {
-            console.log(postData);
-            toast.success("Product submitted successfully!");
-            setIsSubmitting(false);
-        }, 1500);
-    
-        
-        axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/products/add-product`, postData)
-            .then(res => { if(res.status === 200 ){
-                
-                reset()
-              
-                toast.success("Product Submitted Successfully")
+        try {
+            // Format images if needed (optional, depending on your backend)
+            const formattedImages = data.images.map((url, index) => ({
+                [`img${index + 1}`]: url,
+            }));
+            console.log("Formatted Images:", formattedImages); // Debugging
+
+            // Prepare the data to be sent
+            const postData = {
+                ...data,
+                images: formattedImages,
+            };
+            console.log("Post Data:", postData); // Debugging
+
+            // Send the data to the backend
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/products/add-product`,
+                postData
+            );
+            console.log("Response:", response); // Debugging
+
+            // Handle success
+            if (response.status === 200) {
+                toast.success("Product Submitted Successfully");
+                reset(); // Reset the form
+                setImageUrls([]); // Clear the image URLs
+            } else {
+                toast.error("Failed to submit product");
             }
-                console.log(res)})
-            .catch(err => {
-                console.error("Error submitting product:", err);
-                toast.error("Error submitting product");
-                setIsSubmitting(false);
-            });
+        } catch (error) {
+            console.error("Error submitting product:", error);
+            toast.error("Error submitting product");
+        } finally {
+            setIsSubmitting(false); // Reset submitting state
+        }
     };
+
     useEffect(() => {
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/navbar`)
-
             .then((res) => res.json())
             .then((data) => setNavbar(data))
             .catch((err) => {
@@ -255,7 +253,6 @@ export function ProductForm() {
 
     const watchCategory = watch("category")
     const watchPrice = watch("price")
-    const watchDiscount = watch("discount")
 
     return (
         <div className="w-full max-w-4xl mx-auto">
@@ -280,7 +277,7 @@ export function ProductForm() {
                                 {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
                             </div>
 
-                            <div className=" gap-4">
+                            <div className="gap-4">
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Price</label>
                                     <input
@@ -292,17 +289,6 @@ export function ProductForm() {
                                     />
                                     {errors.price && <p className="mt-1 text-sm text-red-500">{errors.price.message}</p>}
                                 </div>
-                                {/* <div>
-                                    <label className="block text-sm font-medium mb-1">Discount</label>
-                                    <input
-                                        type="number"
-                                        {...register("discount")}
-                                        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                                        placeholder="0"
-                                        disabled={isSubmitting}
-                                    />
-                                    {errors.discount && <p className="mt-1 text-sm text-red-500">{errors.discount.message}</p>}
-                                </div> */}
                             </div>
 
                             <div>
@@ -376,7 +362,7 @@ export function ProductForm() {
                             </div>
                         </div>
 
-                        {/* Categories and Sub categories */}
+                        {/* Categories and Subcategories */}
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium mb-1">Category</label>
@@ -507,7 +493,8 @@ export function ProductForm() {
                                 )}
                                 {errors.subCategory && <p className="mt-1 text-sm text-red-500">{errors.subCategory.message}</p>}
                             </div>
-                            {/* images */}
+
+                            {/* Images */}
                             <div>
                                 <label className="block text-sm font-medium mb-1">Upload Images (Max: 3)</label>
                                 <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors">
@@ -528,8 +515,9 @@ export function ProductForm() {
                                 {errors.images && <p className="mt-1 text-sm text-red-500">{errors.images.message}</p>}
                             </div>
 
-                            {imageUrls.length > 0 && (
-                                <div className="grid grid-cols-3 gap-3 mt-3">
+    
+{imageUrls.length > 0 && (
+                                <div className=" grid grid-cols-3 gap-3 mt-3">
                                     {imageUrls.map((url, index) => (
                                         <div key={index} className="relative group aspect-square rounded-md overflow-hidden border">
                                             <Image
@@ -537,6 +525,7 @@ export function ProductForm() {
                                                 alt={`Product image ${index + 1}`}
                                                 fill
                                                 className="object-cover"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             />
                                             <button
                                                 type="button"
@@ -560,23 +549,18 @@ export function ProductForm() {
                                 </div>
                             )}
 
+
                             {/* Product Preview */}
-                            {watchPrice > 0 && (
-                                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                                    <h3 className="font-medium mb-2 text-indigo-600 dark:text-indigo-400">Product Preview</h3>
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="text-xl font-bold">${(watchPrice - (watchDiscount || 0)).toFixed(2)}</span>
-                                        {watchDiscount > 0 && (
-                                            <span className="text-sm text-gray-500 line-through">${watchPrice.toFixed(2)}</span>
-                                        )}
-                                        {watchDiscount > 0 && watchPrice > 0 && (
-                                            <span className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded-full">
-                                                {Math.round((watchDiscount / watchPrice) * 100)}% OFF
-                                            </span>
-                                        )}
-                                    </div>
+                            <div className="mt-6 p-4 bg-gray-50  dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <h3 className="font-medium mb-2 text-indigo-600 dark:text-indigo-400">Product Preview</h3>
+                                <div className="flex items-baseline gap-2">
+                                    {typeof watchPrice === "number" ? (
+                                        <span className="text-xl font-bold">${watchPrice.toFixed(2)}</span>
+                                    ) : (
+                                        <span className="text-xl font-bold text-gray-400">$0.00</span>
+                                    )}
                                 </div>
-                            )}
+                            </div>
                         </div>
                     </div>
 
