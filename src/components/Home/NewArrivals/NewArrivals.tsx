@@ -16,7 +16,7 @@ const NewArrivals: React.FC<ProductProps> = () => {
         const fetchProducts = async () => {
             try {
                 const response = await getProducts({ products: '/products' });
-                console.log(response)
+                // console.log(response)
                 setNewProducts(response.products)
             } catch (error) {
                 console.log(error)
@@ -30,18 +30,20 @@ const NewArrivals: React.FC<ProductProps> = () => {
         <>
             {
                 newProducts?.map((item: ProductProps) => {
+                    const coverImg = Array.isArray(item.images) ? item.images : [];
+                    const randomImage = coverImg.length > 0 ? coverImg[Math.floor(Math.random() * coverImg.length)].src : "default.jpg";
                     return (
                         <Card key={item._id} className="overflow-hidden w-full max-w-sm transition-all duration-300 hover:shadow-xl border-0 shadow-md rounded">
                             <Link
-                                href="/[category]/[subCategory]"
-                                as={`/${item.category}/${item.subCategory}`}
+                                href="/shop/[category]/[subCategory]"
+                                as={`/shop/${item.category}/${item.subCategory}`}
                                 key={item.name}>
 
 
                                 <CardHeader className="p-0">
                                     <div className="relative h-64 rounded-t w-full overflow-hidden group">
                                         <Image
-                                            src={item?.image?.img1 || "/fallback.jpg"}
+                                            src={randomImage || "/fallback.jpg"}
                                             alt={item?.name || "Product Image"}
                                             fill
                                             className="object-cover transition-transform duration-500 group-hover:scale-110"

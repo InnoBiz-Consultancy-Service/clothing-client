@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const getProducts = async ({ products }: { products: string }) => {
-    console.log(products)
     try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}${products}`);
         return response.data;

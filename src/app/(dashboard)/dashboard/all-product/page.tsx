@@ -1,11 +1,12 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
   const [navbar, setNavbar] = useState<{ _id: string; title: string }[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>("MENS"); 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>("MENS");
   interface Product {
     _id: string;
     name: string;
@@ -14,7 +15,7 @@ const Page = () => {
     price: number;
     description?: string;
   }
-  
+
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +33,7 @@ const Page = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-  
+
       const queryCategory =
         selectedCategory === "KIDS (GIRLS)" || selectedCategory === "KIDS (BOYS)"
           ? "Kids"
@@ -81,15 +82,14 @@ const Page = () => {
     <div className="p-6">
       <div className="flex gap-4 border-b-2 pb-2">
         {processedNavItems.map((nav) => (
-          <button
+          <Button
             key={nav._id}
             onClick={() => setSelectedCategory(nav.title)}
-            className={`px-4 py-2 hover:cursor-pointer  rounded-md ${
-              selectedCategory === nav.title ? "bg-gray-900 text-white" : "bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca] text-white"
-            }`}
+            className={`px-4 py-2 hover:cursor-pointer  rounded-md ${selectedCategory === nav.title ? "bg-gray-900 text-white" : "bg-transparent text-black border-2"
+              }`}
           >
             {nav.title}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -97,7 +97,7 @@ const Page = () => {
         {selectedCategory ? (
           products.length > 0 ? (
             <table className="min-w-full border border-gray-300">
-              <thead className="bg-gradient-to-r from-gray-800 to-purple-700 text-white">
+              <thead className="bg-[#364153] text-white">
                 <tr>
                   <th className="py-2 px-4 text-start border-b">Name</th>
                   <th className="py-2 px-4 text-start border-b">Subcategory</th>
@@ -112,12 +112,13 @@ const Page = () => {
                     <td className="py-2 px-4 border-b">{product.subCategory}</td>
                     <td className="py-2 px-4 border-b">${product.price}</td>
                     <td className="py-2 px-4 border-b">
-                      <button
+                      <Button
                         onClick={() => openModal(product)}
-                        className="px-4 hover:cursor-pointer  py-2 bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca] text-white rounded-lg"
+                        variant={'outline'}
+                        className="cursor-pointer"
                       >
                         View Details
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 ))}

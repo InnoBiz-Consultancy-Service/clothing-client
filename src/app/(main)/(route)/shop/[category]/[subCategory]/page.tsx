@@ -1,44 +1,28 @@
-'use client';
-
+"use client"
 import getProducts from '@/apiAction/getProducts';
 import ProductCard from '@/components/Shop/ProductCard/ProductCard';
 import { ProductCardProps } from '@/types/productProps';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const ShopPage = () => {
-    const searchParams = useSearchParams();
-    const category = searchParams.get('category');
-    const subCategory = searchParams.get('subcategory');
-
+const SubCategoryPage = () => {
     const [products, setProducts] = useState<ProductCardProps[]>([]);
-
+    const params = useParams();
+    const { category, subCategory } = params;
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                // Build the query string based on the presence of category and subcategory
-                let queryString = "/products?";
-                if (category) {
-                    queryString += `category=${category}`;
-                }
-                if (subCategory) {
-                    queryString += `${category ? "&" : ""}subcategory=${subCategory}`;
-                }
-
-                const response = await getProducts({ products: `${queryString}&limit=50` });
+                const response = await getProducts({ products: `/products?category=${category}&subcategory=${subCategory}` });
+                // console.log(response)
                 setProducts(response.products)
             } catch (error) {
-                console.error("Error fetching products:", error);
+                console.log(error)
             }
-        };
+        }
 
         fetchProducts();
-    }, [category, subCategory]);
-    // console.log(product)
-    const handleViewDetails = (id: string) => {
-        console.log(`${id} View details for product`)
-        // You can add navigation logic here
-    }
+    }, [category, subCategory])
+
     return (
         <div className="container mx-auto mt-4 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -53,7 +37,6 @@ const ShopPage = () => {
                                 title={product.name}
                                 price={product.price}
                                 imageUrl={randomImage}
-                                onViewDetails={handleViewDetails}
                             />
                         )
                     })
@@ -63,4 +46,4 @@ const ShopPage = () => {
     );
 };
 
-export default ShopPage;
+export default SubCategoryPage;
