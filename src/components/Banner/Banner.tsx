@@ -7,6 +7,7 @@ import banner1 from '../../../public/banner1.png'
 import banner2 from '../../../public/banner2.png'
 import banner3 from '../../../public/banner3.png'
 import { EB_Garamond } from 'next/font/google';
+import Link from "next/link"
 
 const ebGaramond = EB_Garamond({
   weight: ['400', '700'],
@@ -82,9 +83,12 @@ export default function Banner() {
                     {banner.subtitle}
                   </p>
                   <div>
-                    <button className="bg-white text-black px-6 py-2 md:px-8 md:py-3 font-bold tracking-wide hover:bg-white/90 transition-colors">
-                      {banner.ctaText}
-                    </button>
+                    <Link href={'/shop'}>
+                      <button className="bg-white cursor-pointer text-black px-6 py-2 md:px-8 md:py-3 font-bold tracking-wide hover:bg-white/90 transition-colors">
+
+                        {banner.ctaText}
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -86,18 +86,18 @@ export function PhoneInput({ value, onChange, placeholder = "Phone number", clas
 
   useEffect(() => {
     if (value && selectedCountry) {
-    //   const dialCodePattern = new RegExp(`^${selectedCountry.dial_code}\\s*`)
-    //   const extractedNumber = value.replace(dialCodePattern, "").trim()
-    //   if (extractedNumber !== phoneNumber) {
-    //     setPhoneNumber(extractedNumber)
-    //   }
+      //   const dialCodePattern = new RegExp(`^${selectedCountry.dial_code}\\s*`)
+      //   const extractedNumber = value.replace(dialCodePattern, "").trim()
+      //   if (extractedNumber !== phoneNumber) {
+      //     setPhoneNumber(extractedNumber)
+      //   }
     }
   }, [value, selectedCountry])
 
   return (
     <div className={cn("flex", className)}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="cursor-pointer">
           <Button
             variant="outline"
             role="combobox"

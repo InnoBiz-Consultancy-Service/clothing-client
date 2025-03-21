@@ -61,33 +61,27 @@ const KidsCollection = () => {
                                         const randomImage = coverImg.length > 0 ? coverImg[Math.floor(Math.random() * coverImg.length)].src : "default.jpg";
                                         return (
                                             <div key={product._id} className="group">
-                                                <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
-                                                    <Image
-                                                        src={randomImage}
-                                                        alt={product.name}
-                                                        width={200}
-                                                        height={200}
-                                                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                                                    />
-                                                    <div className="absolute inset-0 bg-black bg-opacity-100 transition-all duration-300 flex items-center justify-center opacity-60 md:opacity-0 group-hover:bg-opacity-10 group-hover:opacity-60">
-                                                        <button>
-                                                            <Link
-                                                                href={"/Details"}
-                                                                className="bg-white text-gray-900 py-1 px-3 rounded-sm text-xs font-medium transform transition-all duration-300"
-                                                            >
-                                                                View
-                                                            </Link>
-                                                        </button>
+
+                                                <Link
+                                                    href="/shop/[category]/[subCategory]"
+                                                    as={`/shop/${product.category}/${product.subCategory}`}
+                                                >
+
+                                                    <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
+                                                        <Image
+                                                            src={randomImage}
+                                                            alt={product.name}
+                                                            width={200}
+                                                            height={200}
+                                                            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-2 px-3">
+                                                            <h4 className="text-white                          font-bold truncate">
+                                                                {product.subCategory}
+                                                            </h4>
+                                                        </div>
                                                     </div>
-                                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-2 px-3">
-                                                        <h4 className="text-white text-sm font-medium truncate">
-                                                            {product.name}
-                                                        </h4>
-                                                        <p className="text-white/70 text-xs">
-                                                            ${product.price}
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                </Link>
                                             </div>
                                         )
                                     })}

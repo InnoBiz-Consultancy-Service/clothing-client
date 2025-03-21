@@ -76,10 +76,10 @@ const Faq: React.FC = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-8 bg-gradient-to-b from-gray-50 to-white">
       <div className="text-center mb-12">
-        <h2 className="text-5xl font-bold bg-gradient-to-r from-blue-900 to-blue-400 text-transparent bg-clip-text">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-400 text-transparent bg-clip-text">
           Questions? We have Got Answers
         </h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-rose-500 to-indigo-600 mx-auto my-4 rounded-full"></div>
+        <div className="w-24 h-1 bg-gradient-to-r from-gray-500 to-gray-600 mx-auto my-4 rounded-full"></div>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
           Everything you need to know about our products, policies, and
           promises. Can not find what you are looking for? Contact our style
@@ -102,7 +102,7 @@ const Faq: React.FC = () => {
                     value={`item-${actualIndex}`}
                     className="border-b-0"
                   >
-                    <AccordionTrigger className="px-6 py-4 text-left flex items-center gap-4">
+                    <AccordionTrigger className="px-6 py-4 text-left flex cursor-pointer items-center gap-4">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gray-50 to-gray-100 shadow-sm">
                         {faq.icon}
                       </div>
@@ -136,7 +136,7 @@ const Faq: React.FC = () => {
                     value={`item-${actualIndex}`}
                     className="border-b-0"
                   >
-                    <AccordionTrigger className="px-6 py-4 text-left flex items-center gap-4">
+                    <AccordionTrigger className="px-6 cursor-pointer py-4 text-left flex items-center gap-4">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gray-50 to-gray-100 shadow-sm">
                         {faq.icon}
                       </div>

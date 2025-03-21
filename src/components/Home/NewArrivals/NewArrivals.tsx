@@ -6,7 +6,6 @@ import { ProductProps } from '@/types/productProps'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-
 import { useEffect } from 'react'
 
 const NewArrivals: React.FC<ProductProps> = () => {
@@ -59,7 +58,7 @@ const NewArrivals: React.FC<ProductProps> = () => {
 
 
 
-                                        <h3 className="font-semibold cursor-pointer hover:underline text-lg line-clamp-1 text-gray-800">{item?.name}</h3>
+                                        <h3 className="font-semibold cursor-pointer hover:underline text-lg line-clamp-1 text-gray-800">{item?.subCategory}</h3>
                                     </div>
 
                                 </CardContent>

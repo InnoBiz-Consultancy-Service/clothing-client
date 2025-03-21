@@ -122,7 +122,7 @@ export default function ProductDetails({ params }: { params: ProductDetailsParam
                 100% Original
               </Badge>
               <Badge variant="outline" className="px-3 py-1">
-                Rang Bangladesh Ltd.
+                Ten Rush Bangladesh Ltd.
               </Badge>
             </div>
           </div>
