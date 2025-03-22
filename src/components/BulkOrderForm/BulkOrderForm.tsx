@@ -1,5 +1,4 @@
 "use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -46,12 +45,11 @@ export default function ContactForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-        
+
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`, values);
             form.reset();
             console.log("Order saved and emails sent:", response.data);
-            // TO DO: Ai khane ekta alert dite hobe je order submit hoise...
             alert("Order submitted successfully!");
 
         } catch (error) {
