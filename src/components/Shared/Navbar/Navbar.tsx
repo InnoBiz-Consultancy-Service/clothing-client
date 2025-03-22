@@ -1,5 +1,4 @@
 "use client"
-import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Menu, Search, ShoppingCart } from "lucide-react"
@@ -8,46 +7,42 @@ import NavItems from "./NavItems/NavItems"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import { navProps } from "@/types/navProps"
+import type { navProps } from "@/types/navProps"
 import getNavbarData from "@/apiAction/getNavbarData"
-import logo from '../../../../public/clothing.png'
+import logo from "../../../../public/clothing.png"
 import Image from "next/image"
-import { useSession, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [navItems, setNavItems] = useState<navProps[]>([]);
-    const session = useSession();
+    const [navItems, setNavItems] = useState<navProps[]>([])
+    const session = useSession()
 
-
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log("Searching for:", searchQuery)
-        // Implement search functionality here
-        // TO DO
-    }
     useEffect(() => {
         const navbarData = async () => {
-            const data = await getNavbarData();
-            setNavItems(data);
-        };
-        navbarData();
-    }, []);
+            const data = await getNavbarData()
+            setNavItems(data)
+        }
+        navbarData()
+    }, [])
 
     return (
         <header className="border-b border-gray-200 bg-white">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
+            <div className=" flex h-16 items-center justify-between px-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <Image src={logo} width={30} height={30} alt="Ten Rush" />
-                    <p className='space-x-1 text-lg'> <span className="bg-red-600 px-2 rounded text-white">Ten</span><span>Rus</span></p>
+                    <Image src={logo || "/placeholder.svg"} width={30} height={30} alt="Ten Rush" />
+                    <p className="space-x-1 text-lg">
+                        {" "}
+                        <span className="bg-red-600 px-2 rounded text-white">Ten</span>
+                        <span>Rus</span>
+                    </p>
                 </Link>
 
                 {/* Navigation */}
-                <nav className="hidden md:flex items-center gap-6">
+                <nav className="hidden md:flex items-center gap-4">
                     <div className="relative" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>
-                        <Link className="hover:text-red-600" href={'/shop'}>
+                        <Link className="hover:text-red-600" href={"/shop"}>
                             <button className="flex cursor-pointer items-center gap-1 px-2 py-2 text-sm font-medium">
                                 Shop
                                 <svg
@@ -74,50 +69,35 @@ export default function Navbar() {
 
                 {/* Search Bar */}
                 <div className="hidden md:block flex-1 max-w-md mx-4">
-                    <form onSubmit={handleSearch} className="relative">
+                    <div className="relative">
                         <input
                             type="text"
                             placeholder="Search Products by Titles or Tags"
                             className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2" aria-label="Search">
                             <Search className="h-4 w-4 text-gray-500" />
                         </button>
-                    </form>
+                    </div>
                 </div>
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
-
-                    <Link href={'/OrderBulk'}>
+                    <Link href={"/OrderBulk"}>
                         <Button variant="outline" className="text-gray-700 cursor-pointer">
                             <ShoppingCart /> Order Bulk
                         </Button>
                     </Link>
 
-
-                    {session.status === "authenticated" ? (
+                    {session.status === "authenticated" && (
                         <>
-                            <Link href={'/dashboard'}>
+                            <Link href={"/dashboard"}>
                                 <Button variant="outline" className="text-gray-700 cursor-pointer">
                                     Dashboard
                                 </Button>
-                                <Button variant="outline" className="text-gray-700 cursor-pointer" onClick={() => signOut()}>
-                                    Logout
-                                </Button>
                             </Link>
                         </>
-                    ) : (
-                        <Link href={'/login'}>
-                            <Button variant="outline" className="text-gray-700 cursor-pointer">
-                                Login
-                            </Button>
-                        </Link>
-
                     )}
-
 
                     {/* Mobile menu button */}
                     <Sheet>
@@ -158,3 +138,4 @@ export default function Navbar() {
         </header>
     )
 }
+

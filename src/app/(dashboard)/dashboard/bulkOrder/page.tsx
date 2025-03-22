@@ -21,7 +21,7 @@ const Page = () => {
     deliveryDate?: string;
     description?: string;
   }
-  
+
   const [orderData, setOrderData] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
@@ -34,11 +34,11 @@ const Page = () => {
   return (
     <div className="container mx-auto p-4">
       <div className=" rounded-lg  h-[80vh] ">
-      
+
         <div className="h-full">
           <div className="">
             <table className="w-full min-w-max bg-white">
-              <thead className="sticky top-0 text-white bg-gradient-to-r from-gray-800 to-purple-700 shadow">
+              <thead className="sticky top-0 text-white bg-[#364153] shadow">
                 <tr className="border-b">
                   <th className="p-3 border">Name</th>
                   <th className="p-3 border">Email</th>
@@ -59,7 +59,8 @@ const Page = () => {
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
-                              className="bg-gradient-to-r from-[#5652ca] to-[#73145b] hover:from-[#73145b] hover:to-[#5652ca]"
+                              className="cursor-pointer"
+                              variant={'outline'}
                               onClick={() => setSelectedOrder(order)}
                             >
                               View Details
@@ -71,7 +72,7 @@ const Page = () => {
                               <DialogDescription>
                                 {selectedOrder && (
                                   <div className="space-y-2 overflow-y-auto max-h-[60vh] p-2">
-                                    
+
                                     <p>
                                       <strong className="text-black">
                                         Name:
