@@ -355,11 +355,10 @@
 
 // export default ShopLayout;
 
-
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import { Filter } from "lucide-react"
 import getNavbarData from "@/apiAction/getNavbarData"
 import { Button } from "@/components/ui/button"
@@ -374,8 +373,9 @@ const ShopFilter = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([])
 
-  // const router = useRouter()
-  const searchParams = useSearchParams()
+  const params = useParams()
+  const category = params.category as string
+  const subCategory = params.subCategory as string
 
   // Load filter states from URL on initial load
   useEffect(() => {
@@ -385,17 +385,14 @@ const ShopFilter = () => {
     }
     fetchNav()
 
-    const categoryQuery = searchParams.get("category")
-    const subcategoryQuery = searchParams.get("subcategory")
-
-    if (categoryQuery) {
-      setSelectedCategories(categoryQuery.split(","))
+    if (category) {
+      setSelectedCategories(category.split(","))
     }
 
-    if (subcategoryQuery) {
-      setSelectedSubcategories(subcategoryQuery.split(","))
+    if (subCategory) {
+      setSelectedSubcategories(subCategory.split(","))
     }
-  }, [searchParams])
+  }, [category, subCategory])
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) => {
@@ -419,20 +416,22 @@ const ShopFilter = () => {
 
   // Update URL when filters change
   useEffect(() => {
-    // Only update if we have categories loaded
     if (categories.length === 0) return
 
-    const params = new URLSearchParams()
+    const params = new URLSearchParams(window.location.search)
 
     if (selectedCategories.length > 0) {
       params.set("category", selectedCategories.join(","))
+    } else {
+      params.delete("category")
     }
 
     if (selectedSubcategories.length > 0) {
       params.set("subcategory", selectedSubcategories.join(","))
+    } else {
+      params.delete("subcategory")
     }
 
-    // Use Next.js router to update the URL without a full page reload
     const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`
     window.history.pushState(null, "", newUrl)
   }, [selectedCategories, selectedSubcategories, categories])

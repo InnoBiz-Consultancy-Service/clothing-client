@@ -21,7 +21,7 @@ export default function ProductCard({
 
     return (
         <div className="overflow-hidden transition-all duration-300 hover:shadow-lg group w-full max-w-xs">
-            <Link href={`/Details/${id}`}>
+            <Link href={`/product-details/${id}`}>
                 <div className="relative h-48 overflow-hidden">
                     <Image
                         src={imageUrl || "/placeholder.svg"}

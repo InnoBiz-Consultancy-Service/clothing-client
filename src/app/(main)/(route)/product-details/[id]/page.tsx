@@ -7,20 +7,25 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import getProducts from "@/apiAction/getProducts"
 import { ProductProps } from "@/types/productProps"
+import { Loader } from "@/components/Loader/Loader"
 
-interface ProductDetailsParams {
-  productDetails: string;
-}
-
-export default function ProductDetails({ params }: { params: ProductDetailsParams }) {
+export default function ProductDetails() {
   const [details, setDetails] = useState<ProductProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const id = typeof window !== "undefined" ? window.location.pathname.split("/").pop() : null;
+
   useEffect(() => {
+    if (!id) {
+      setError("Product ID not found in the URL.");
+      setLoading(false);
+      return;
+    }
+
     const fetchProductDetails = async () => {
       try {
-        const response = await getProducts({ products: `/products/${params.productDetails}` });
+        const response = await getProducts({ products: `/products/${id}` });
         setDetails(response);
       } catch (err) {
         setError(`Failed to fetch product details. ${err}`);
@@ -29,18 +34,16 @@ export default function ProductDetails({ params }: { params: ProductDetailsParam
       }
     };
     fetchProductDetails();
-  }, [params.productDetails]);
+  }, [id]);
 
   if (loading) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>;
+    return <div className="container mx-auto flex justify-center h-screen items-center px-4 py-8">
+      <Loader />
+    </div>;
   }
 
   if (error) {
     return <div className="container mx-auto px-4 py-8 text-red-500">{error}</div>;
-  }
-
-  if (!details) {
-    return <div className="container mx-auto px-4 py-8">Product not found.</div>
   }
 
   return (
@@ -51,7 +54,7 @@ export default function ProductDetails({ params }: { params: ProductDetailsParam
           <div className="relative rounded-lg overflow-hidden border border-border">
             <Carousel>
               <CarouselContent>
-                {details.images?.map((image, index) => (
+                {details?.images?.map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="relative aspect-square w-full">
                       <Image
@@ -75,39 +78,39 @@ export default function ProductDetails({ params }: { params: ProductDetailsParam
         <div className="space-y-6">
           <div>
             <div className="flex justify-between items-start">
-              <h1 className="text-3xl font-bold">{details.name}</h1>
+              <h1 className="text-3xl font-bold">{details?.name}</h1>
               <div className="flex space-x-2">
                 <Badge variant="outline" className="bg-primary/10">
-                  {details.category}
+                  {details?.category}
                 </Badge>
                 <Badge variant="outline" className="bg-primary/10">
-                  {details.subCategory}
+                  {details?.subCategory}
                 </Badge>
               </div>
             </div>
-            <p className="text-2xl font-semibold mt-2">৳{details.price}</p>
+            <p className="text-2xl font-semibold mt-2">৳{details?.price}</p>
           </div>
 
           <Card className="p-4 bg-muted/30">
             <h3 className="font-medium mb-2">Description</h3>
-            <p className="text-muted-foreground">{details.description}</p>
+            <p className="text-muted-foreground">{details?.description}</p>
           </Card>
 
           <div>
             <h3 className="font-medium mb-3">Color</h3>
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 rounded-full bg-olive-600" title={details.colors}></div>
-              <span>{details.colors}</span>
+              <div className="w-6 h-6 rounded-full bg-olive-600" title={details?.colors}></div>
+              <span>{details?.colors}</span>
             </div>
           </div>
 
           <div>
             <h3 className="font-medium mb-3">Select Size</h3>
             <div className="flex flex-wrap gap-2">
-              {details.sizes?.map((size) => (
+              {details?.sizes?.map((size) => (
                 <Button
                   key={size}
-                  variant= "outline"
+                  variant="outline"
                   className="h-10 px-4"
                 >
                   {size}
