@@ -25,7 +25,7 @@ const SubCategoryPage = () => {
 
     return (
         <div className="container mx-auto mt-4 px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {
                     products.map((product) => {
                         const coverImg = Array.isArray(product.images) ? product.images : [];

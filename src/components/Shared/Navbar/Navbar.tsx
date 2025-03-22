@@ -14,17 +14,25 @@ import Image from "next/image"
 import { useSession } from "next-auth/react"
 
 export default function Navbar() {
-    const [isShopOpen, setIsShopOpen] = useState(false)
-    const [navItems, setNavItems] = useState<navProps[]>([])
-    const session = useSession()
+    const [isShopOpen, setIsShopOpen] = useState(false);
+    const [navItems, setNavItems] = useState<navProps[]>([]);
+    const [, setLoading] = useState(true);
+    const session = useSession();
 
     useEffect(() => {
         const navbarData = async () => {
-            const data = await getNavbarData()
-            setNavItems(data)
-        }
-        navbarData()
-    }, [])
+            try {
+                const data = await getNavbarData();
+                setNavItems(data);
+            } catch (error) {
+                console.error('Error fetching navbar data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        navbarData();
+    }, []);
 
     return (
         <header className="border-b border-gray-200 bg-white">
@@ -118,9 +126,10 @@ export default function Navbar() {
                                                 <div className="space-y-2 pl-3 border-l-2 border-gray-200">
                                                     {category.items.map((item) => (
                                                         <Link
-                                                            href={item.link}
+                                                            href="/shop/[category]/[subCategory]"
+                                                            as={`/shop/${category.title}/${item.name}`}
                                                             key={item.name}
-                                                            className="block text-base text-gray-700 hover:text-black font-medium transition-all duration-200 relative before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-gray-400 before:rounded-full before:opacity-0 hover:before:opacity-100"
+                                                            className="block text-sm text-gray-600 hover:text-black transition-colors"
                                                         >
                                                             {item.name}
                                                         </Link>
