@@ -25,11 +25,11 @@ const Footer: React.FC = () => {
                 <input
                   type="email"
                   placeholder="Enter email address"
-                  className="w-full px-4 py-3 rounded-l-full text-white border-2 border-amber-50"
+                  className="w-full px-4 py-3 rounded-l-full text-white border"
                 />
                 <button
                   type="submit"
-                  className="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-r-full font-bold transition-colors duration-300"
+                  className="bg-[#FFB627] text-[#1A1A1A] cursor-pointer px-6 py-2 rounded-r-full font-bold transition-colors duration-300"
                 >
                   SUBSCRIBE
                 </button>
@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
 
       {/* Footer */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 text-red-400">QUICK LINKS</h3>
             <ul>
@@ -77,41 +77,7 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
-          <div>
-            <h3 className="text-xl font-bold mb-4 text-red-400">CATEGORIES</h3>
-            <ul>
-              <li className="mb-3">
-                <Link href="/" className="inline-block">
-                  <span className="text-red-500 mr-2 font-bold">›</span>
-                  <span className="hover-link">Womens Fashion</span>
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link href="/" className="inline-block">
-                  <span className="text-red-500 mr-2 font-bold">›</span>
-                  <span className="hover-link">Mens Clothing</span>
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link href="/" className="inline-block">
-                  <span className="text-red-500 mr-2 font-bold">›</span>
-                  <span className="hover-link">Accessories</span>
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link href="/" className="inline-block">
-                  <span className="text-red-500 mr-2 font-bold">›</span>
-                  <span className="hover-link">Footwear</span>
-                </Link>
-              </li>
-              <li className="mb-3">
-                <Link href="/" className="inline-block">
-                  <span className="text-red-500 mr-2 font-bold">›</span>
-                  <span className="hover-link">Seasonal Collections</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
+
           <div>
             <h3 className="text-xl font-bold mb-4 text-red-400">CONTACT US</h3>
             <p className="mb-2">Innobiz Consultancy</p>
@@ -147,29 +113,30 @@ const Footer: React.FC = () => {
       {/*  */}
       <div className="bg-gray-900 py-4 text-center md:text-left">
         <div className="container mx-auto px-4 pb-8">
-          <div className="flex flex-col justify-center gap-y-4 items-center text-center">
-            <p>
-              © Copyright <span className="text-red-400">Stylish Threads</span>.
-              All Rights Reserved
-            </p>
-            <p>
-              Designed by
-              <a
-                href="#"
-                className="text-red-400 ml-1 transition-colors duration-300"
-              >
-                Innobiz Consultancy
-              </a>
-            </p>
-          </div>
+
           <div className="flex flex-row justify-center items-center gap-6 pt-6 text-3xl">
             <FaFacebook />
             <FaInstagram />
             <FaTwitter />
             <FaX />
           </div>
+          <div className="flex flex-col justify-center mt-3 gap-y-4 items-center text-center">
+            <p>
+              © Copyright <span className="text-red-400">Stylish Threads</span>.
+              All Rights Reserved
+            </p>
+          </div>
         </div>
       </div>
+      <p className="flex justify-center text-sm">
+        Powered by
+        <a
+          href="#"
+          className="text-red-400 ml-1"
+        >
+          Innobiz Consultancy Service
+        </a>
+      </p>
     </footer>
   );
 };

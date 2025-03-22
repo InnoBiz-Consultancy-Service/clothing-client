@@ -1,4 +1,5 @@
 "use client"
+import getNavbarData from "@/apiAction/getNavbarData";
 import { navProps } from "@/types/navProps";
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -11,14 +12,16 @@ interface NavItemsProps {
 export default function NavItems({ isOpen }: NavItemsProps) {
     const [navData, setNavData] = useState<navProps[]>([]);
     useEffect(() => {
-        fetch('https://clothing-server-hazel.vercel.app/api/v1/navbar')
-            .then(res => res.json())
-            .then(data => setNavData(data));
+        const navbarData = async () => {
+            const data = await getNavbarData();
+            setNavData(data);
+        };
+        navbarData();
     }, []);
     // console.log(navData)
     if (!isOpen) return null
     return (
-        <div className="absolute left-0 top-full z-50 w-screen bg-white shadow-md">
+        <div className="absolute -left-[200px] top-full z-50 w-screen bg-white shadow-md">
             <div className="container mx-auto py-8">
                 <div className="grid grid-cols-1 md:grid-cols-7 gap-8">
                     {navData.map((category) => (
@@ -27,7 +30,8 @@ export default function NavItems({ isOpen }: NavItemsProps) {
                             <div className="space-y-2">
                                 {category.items.map((item) => (
                                     <Link
-                                        href={item.link}
+                                        href="/shop/[category]/[subCategory]"
+                                        as={`/shop/${category.title}/${item.name}`}
                                         key={item.name}
                                         className="block text-sm text-gray-600 hover:text-black transition-colors"
                                     >
