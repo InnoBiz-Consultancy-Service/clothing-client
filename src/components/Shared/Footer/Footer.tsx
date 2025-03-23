@@ -121,10 +121,10 @@ const Footer: React.FC = () => {
             <FaX />
           </div>
           <div className="flex flex-col justify-center mt-3 gap-y-4 items-center text-center">
-            <p>
-              © Copyright <span className="text-red-400">Stylish Threads</span>.
-              All Rights Reserved
+            <p className="text-sm text-center text-red-400 transition-colors">
+              © 2025 All Rights Reserved TenRus{' '}
             </p>
+
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ const Footer: React.FC = () => {
         Powered by
         <a
           href="#"
-          className="text-red-400 ml-1"
+          className="text-blue-400 ml-1 hover:underline"
         >
           Innobiz Consultancy Service
         </a>

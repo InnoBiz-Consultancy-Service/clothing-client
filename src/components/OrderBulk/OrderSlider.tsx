@@ -24,11 +24,11 @@ const images = [
 const OrderSlider = () => {
   return (
     <div className="container mx-auto my-16">
-      <div className="my-6 p-6">
+      <div className="my-6">
         <h1 className="flex text-gray-800 justify-center items-center font-bold text-3xl">
           Sustainable Custom Merchandise & Corporate Gift Solutions.
         </h1>
-        <p className="text-center my-3 text-gray-600">
+        <p className="text-start my-3 text-gray-600">
           We specialize in providing sustainable, budget-friendly, and top-tier custom merchandise and
           corporate gift solutions catering to a diverse clientele, spanning from dynamic startups to esteemed multinational corporations.
           Backed by a comprehensive in-house production facility, we guarantee a seamless production process and uphold unwavering standards of quality.

@@ -63,7 +63,7 @@ export default function Banner() {
         <CarouselContent>
           {banners.map((banner) => (
             <CarouselItem key={banner.id}>
-              <div className="relative w-full aspect-[21/9] md:aspect-[21/7] overflow-hidden">
+              <div className="relative w-full min-h-[400px] sm:aspect-[16/9] md:aspect-[21/7] overflow-hidden">
                 <Image
                   src={banner.imageUrl || "/placeholder.svg"}
                   alt={banner.title}

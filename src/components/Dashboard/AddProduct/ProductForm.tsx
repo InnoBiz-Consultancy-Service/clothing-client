@@ -407,10 +407,10 @@ export function ProductForm() {
     }, [selectedFiles, setValue])
 
     const watchCategory = watch("category")
-    const watchPrice = watch("price")
+    // const watchPrice = watch("price")
 
     return (
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full mx-auto">
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden">
                 <div className="bg-gradient-to-r from-gray-800 to-gray-600 p-6">
                     <h2 className="text-2xl font-bold text-white">Add New Product</h2>
@@ -422,12 +422,12 @@ export function ProductForm() {
                         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-7">
                             {/* Basic Information */}
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Product Name</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Product Name</label>
                                     <input
                                         {...register("name")}
                                         className="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
@@ -439,7 +439,7 @@ export function ProductForm() {
 
                                 <div className="gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium mb-1">Price</label>
+                                        <label className="block text-sm font-medium mb-1 ml-0.5">Price</label>
                                         <input
                                             type="number"
                                             {...register("price")}
@@ -452,7 +452,7 @@ export function ProductForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Description</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Description</label>
                                     <textarea
                                         {...register("description")}
                                         rows={4}
@@ -464,7 +464,7 @@ export function ProductForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Sizes</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Sizes</label>
                                     <div className="grid grid-cols-3 gap-2 mb-2">
                                         {availableSizes?.map((size) => (
                                             <label
@@ -510,7 +510,7 @@ export function ProductForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Color</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Color</label>
                                     <input
                                         type="text"
                                         {...register("colors")}
@@ -525,7 +525,7 @@ export function ProductForm() {
                             {/* Categories and Subcategories */}
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Category</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Category</label>
                                     {!showAddCategory ? (
                                         <select
                                             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
@@ -589,7 +589,7 @@ export function ProductForm() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Sub-Category</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Sub-Category</label>
                                     {!showAddSubCategory ? (
                                         <select
                                             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
@@ -656,7 +656,7 @@ export function ProductForm() {
 
                                 {/* Images */}
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Upload Images (Max: 3)</label>
+                                    <label className="block text-sm font-medium mb-1 ml-0.5">Upload Images (Max: 3)</label>
                                     <div
                                         className={`border-2 border-dashed ${isDragging ? "border-indigo-500 bg-indigo-50" : "border-gray-300"} rounded-md p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors`}
                                         onDragOver={handleDragOver}
@@ -722,7 +722,7 @@ export function ProductForm() {
                                 )}
 
                                 {/* Product Preview */}
-                                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                {/* <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                                     <h3 className="font-medium mb-2 text-indigo-600 dark:text-indigo-400">Product Preview</h3>
                                     <div className="flex items-baseline gap-2">
                                         {typeof watchPrice === "number" ? (
@@ -731,7 +731,7 @@ export function ProductForm() {
                                             <span className="text-xl font-bold text-gray-400">$0.00</span>
                                         )}
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 

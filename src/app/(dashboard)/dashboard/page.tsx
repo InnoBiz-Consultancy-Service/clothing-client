@@ -59,13 +59,13 @@ const Dashboard = () => {
     productData.forEach((product) => {
       const category = product.category;
       if (categories[category]) {
-        categories[category] += 1; // Count the number of products in each category
+        categories[category] += 1;
       } else {
-        categories[category] = 1; // Initialize the count for the category
+        categories[category] = 1;
       }
     });
 
-    console.log("Category Product Count:", categories); // Debugging line
+    console.log("Category Product Count:", categories);
 
     return {
       labels: Object.keys(categories),
@@ -121,7 +121,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 my-10  min-h-screen">
+    <div className="my-10  min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-gray-800"></h1>
 
       {/* Summary Cards */}
