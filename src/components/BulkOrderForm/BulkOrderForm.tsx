@@ -61,8 +61,8 @@ export default function ContactForm() {
     }
 
     return (
-        <div className="container mx-auto p-6">
-            <div className="grid gap-8 lg:grid-cols-2">
+        <div>
+            <div className="grid mt-6 gap-8 lg:grid-cols-2">
                 {/* Form Section */}
                 <div>
                     <div className="mb-8 text-center">

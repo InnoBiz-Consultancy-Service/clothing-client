@@ -74,7 +74,7 @@ const Faq: React.FC = () => {
   const rightColumnFaqs = faqData.slice(middleIndex);
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-8 bg-gradient-to-b from-gray-50 to-white">
+    <div className="w-full mx-auto container px-4 bg-gradient-to-b from-gray-50 to-white">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-400 text-transparent bg-clip-text">
           Questions? We have Got Answers

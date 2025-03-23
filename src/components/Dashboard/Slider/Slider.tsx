@@ -105,7 +105,7 @@ const Sidebar = () => {
             {/* Hamburger menu button for mobile */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="fixed top-4 left-4 z-50 md:hidden">
+                    <Button variant="ghost" size="icon" className="fixed top-4 z-50 md:hidden">
                         <Menu size={24} />
                         <span className="sr-only">Toggle menu</span>
                     </Button>

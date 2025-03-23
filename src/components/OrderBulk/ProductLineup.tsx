@@ -14,7 +14,7 @@ const products = [
 
 const ProductLineup = () => {
     return (
-        <div className="p-6 md:p-8">
+        <div>
             {/* Title Section */}
             <div className="relative flex items-center justify-center mb-6">
                 <div className="bg-teal-100 px-6 py-3 rounded-md inline-block text-center">
@@ -23,7 +23,7 @@ const ProductLineup = () => {
             </div>
 
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product, index) => (
                     <div
                         key={index}
