@@ -14,10 +14,10 @@ const Page = () => {
   };
 
   return (
-    <div className="container mx-auto p-10">
+    <div className="container mx-auto px-4">
       {/* Background Image Section */}
       <div
-        className="w-full bg-contain bg-repeat flex justify-center items-center relative"
+        className="w-full bg-contain bg-no-repeat flex justify-center items-center relative"
         style={{
           backgroundImage:
             "url('https://i.ibb.co/ym72J2Xh/online-shopping-on-website-e-commerce-applications-and-digital-marketing-hand-holding-smartphonwith.jpg')",
