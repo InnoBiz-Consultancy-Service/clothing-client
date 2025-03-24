@@ -12,9 +12,12 @@ import getNavbarData from "@/apiAction/getNavbarData"
 import logo from "../../../../public/clothing.png"
 import Image from "next/image"
 import { useSession } from "next-auth/react"
+import { usePathname } from "next/navigation"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false)
+    const pathname = usePathname();
     const [navItems, setNavItems] = useState<navProps[]>([]);
     const [, setLoading] = useState(true);
     const session = useSession();
@@ -33,6 +36,11 @@ export default function Navbar() {
 
         navbarData();
     }, []);
+
+    useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
+
 
     return (
         <header className="border-b border-gray-200 bg-white">
@@ -108,7 +116,7 @@ export default function Navbar() {
                     )}
 
                     {/* Mobile menu button */}
-                    <Sheet>
+                    <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <button className="md:hidden cursor-pointer" aria-label="Menu">
                                 <Menu className="h-6 w-6" />
@@ -125,9 +133,23 @@ export default function Navbar() {
                                             <AccordionContent>
                                                 <div className="space-y-2 pl-3 border-l-2 border-gray-200">
                                                     {category.items.map((item) => (
+                                                        // <Link
+                                                        //     href="/shop/[category]/[subCategory]"
+                                                        //     as={`/shop/${category.title}/${item.name}`}
+                                                        //     key={item.name}
+                                                        //     className="block text-sm text-gray-600 hover:text-black transition-colors"
+                                                        // >
+                                                        //     {item.name}
+                                                        // </Link>
+
                                                         <Link
-                                                            href="/shop/[category]/[subCategory]"
-                                                            as={`/shop/${category.title}/${item.name}`}
+                                                            href={{
+                                                                pathname: "/shop",
+                                                                query: {
+                                                                    category: category.title,
+                                                                    subcategory: item.name,
+                                                                },
+                                                            }}
                                                             key={item.name}
                                                             className="block text-sm text-gray-600 hover:text-black transition-colors"
                                                         >
