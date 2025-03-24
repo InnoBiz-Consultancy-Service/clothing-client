@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { SetStateAction, useEffect, useState } from "react"
 import Link from "next/link"
 import { Menu, Search, ShoppingCart } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -12,34 +12,80 @@ import getNavbarData from "@/apiAction/getNavbarData"
 import logo from "../../../../public/clothing.png"
 import Image from "next/image"
 import { useSession } from "next-auth/react"
+import { motion } from "framer-motion"
+
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.3,
+        },
+    },
+}
 import { usePathname } from "next/navigation"
+import getProducts from "@/apiAction/getProducts"
+import { Loader } from "@/components/Loader/Loader"
+import { ProductCardProps } from "@/types/productProps"
 
 export default function Navbar() {
-    const [isShopOpen, setIsShopOpen] = useState(false);
+    const [isShopOpen, setIsShopOpen] = useState(false)
     const [open, setOpen] = useState<boolean>(false)
-    const pathname = usePathname();
-    const [navItems, setNavItems] = useState<navProps[]>([]);
-    const [, setLoading] = useState(true);
-    const session = useSession();
+    const pathname = usePathname()
+    const [navItems, setNavItems] = useState<navProps[]>([])
+    const [, setLoading] = useState(true)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [searchProduct, setSearchProduct] = useState<ProductCardProps[]>([])
+    const session = useSession()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const navbarData = async () => {
             try {
-                const data = await getNavbarData();
-                setNavItems(data);
+                const data = await getNavbarData()
+                setNavItems(data)
             } catch (error) {
-                console.error('Error fetching navbar data:', error);
+                console.error("Error fetching navbar data:", error)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
-        navbarData();
-    }, []);
+        navbarData()
+    }, [])
 
     useEffect(() => {
-        setOpen(false);
-    }, [pathname]);
+        setOpen(false)
+    }, [pathname])
+    const handleSearch = (e: { target: { value: SetStateAction<string> } }) => {
+        setSearchQuery(e.target.value)
+    }
+
+    useEffect(() => {
+        const fetchSearchProducts = async () => {
+            try {
+                if (searchQuery.trim() === "") {
+                    setSearchProduct([])
+                    return
+                }
+
+                setIsLoading(true)
+                const response = await getProducts({ products: `/search-products?product=${searchQuery}` })
+                setSearchProduct(response.data || [])
+            } catch (error) {
+                console.error("Error fetching search products:", error)
+                setSearchProduct([])
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        const debounceTimer = setTimeout(() => {
+            fetchSearchProducts()
+        }, 300)
+
+        return () => clearTimeout(debounceTimer)
+    }, [searchQuery])
 
 
     return (
@@ -87,6 +133,8 @@ export default function Navbar() {
                 <div className="hidden md:block flex-1 max-w-md mx-4">
                     <div className="relative">
                         <input
+                            value={searchQuery}
+                            onChange={handleSearch}
                             type="text"
                             placeholder="Search Products by Titles or Tags"
                             className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -133,15 +181,6 @@ export default function Navbar() {
                                             <AccordionContent>
                                                 <div className="space-y-2 pl-3 border-l-2 border-gray-200">
                                                     {category.items.map((item) => (
-                                                        // <Link
-                                                        //     href="/shop/[category]/[subCategory]"
-                                                        //     as={`/shop/${category.title}/${item.name}`}
-                                                        //     key={item.name}
-                                                        //     className="block text-sm text-gray-600 hover:text-black transition-colors"
-                                                        // >
-                                                        //     {item.name}
-                                                        // </Link>
-
                                                         <Link
                                                             href={{
                                                                 pathname: "/shop",
@@ -164,6 +203,63 @@ export default function Navbar() {
                             </div>
                         </SheetContent>
                     </Sheet>
+                </div>
+            </div>
+            <div className="flex justify-center">
+                <div className="relative w-1/2 mx-auto">
+                    {/* Search input */}
+                    {searchQuery.trim() !== "" && (
+                        <motion.div
+                            className="absolute z-50 w-full bg-white rounded-lg shadow-lg border border-border overflow-hidden"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <div className="p-2">
+                                <h3 className="text-sm font-medium text-muted-foreground mb-2 px-2">
+                                    {isLoading ? "Searching..." : `${searchProduct.length} results found`}
+                                </h3>
+                            </div>
+
+                            <motion.div
+                                className="max-h-[400px] overflow-y-auto"
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+                            >
+                                {isLoading ? (
+                                    <div className="flex justify-center items-center p-8">
+                                        <Loader />
+                                    </div>
+                                ) : searchProduct.length > 0 ? (
+                                    searchProduct.map((item) => (
+                                        <motion.div key={item._id} className="group" variants={container}>
+                                            <a href={`/product-details/${item._id}`} className="block">
+                                                <div className="flex items-center p-3 hover:bg-gray-50 transition-colors duration-150">
+                                                    <div className="relative h-16 w-16 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
+                                                        <Image
+                                                            src={item?.images?.[0]?.src || "/placeholder.svg"}
+                                                            alt={item.name}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    </div>
+                                                    <div className="ml-4 flex-1">
+                                                        <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-150">
+                                                            {item.name}
+                                                        </h4>
+                                                        <p className="text-sm font-bold text-primary">{item.price}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </motion.div>
+                                    ))
+                                ) : (
+                                    <div className="p-4 text-center text-muted-foreground">No products found</div>
+                                )}
+                            </motion.div>
+                        </motion.div>
+                    )}
                 </div>
             </div>
         </header>
