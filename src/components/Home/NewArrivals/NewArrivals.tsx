@@ -34,10 +34,16 @@ const NewArrivals: React.FC<ProductProps> = () => {
                     return (
                         <Card key={item._id} className="overflow-hidden w-full max-w-sm transition-all duration-300 hover:shadow-xl border-0 shadow-md rounded">
                             <Link
-                                href="/shop/[category]/[subCategory]"
-                                as={`/shop/${item.category}/${item.subCategory}`}
-                                key={item.name}>
-
+                                href={{
+                                    pathname: "/shop",
+                                    query: {
+                                        category: item?.category,
+                                        subcategory: item?.subCategory,
+                                    },
+                                }}
+                                key={item?.name}
+                                className="block text-sm text-gray-600 hover:text-black transition-colors"
+                            >
 
                                 <CardHeader className="p-0">
                                     <div className="relative h-64 rounded-t w-full overflow-hidden group">

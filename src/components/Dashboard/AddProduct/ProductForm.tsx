@@ -411,7 +411,7 @@ export function ProductForm() {
 
     return (
         <div className="w-full mx-auto">
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden">
                 <div className="bg-gradient-to-r from-gray-800 to-gray-600 p-6">
                     <h2 className="text-2xl font-bold text-white">Add New Product</h2>
                     <p className="text-indigo-100">Fill in the details to add a new product to your inventory</p>
@@ -721,17 +721,6 @@ export function ProductForm() {
                                     </div>
                                 )}
 
-                                {/* Product Preview */}
-                                {/* <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                                    <h3 className="font-medium mb-2 text-indigo-600 dark:text-indigo-400">Product Preview</h3>
-                                    <div className="flex items-baseline gap-2">
-                                        {typeof watchPrice === "number" ? (
-                                            <span className="text-xl font-bold">${watchPrice.toFixed(2)}</span>
-                                        ) : (
-                                            <span className="text-xl font-bold text-gray-400">$0.00</span>
-                                        )}
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
 
