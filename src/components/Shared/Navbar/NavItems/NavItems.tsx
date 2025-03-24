@@ -7,8 +7,6 @@ import { useEffect, useState } from "react"
 interface NavItemsProps {
     isOpen: boolean
 }
-
-
 export default function NavItems({ isOpen }: NavItemsProps) {
     const [navData, setNavData] = useState<navProps[]>([]);
     useEffect(() => {

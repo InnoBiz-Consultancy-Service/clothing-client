@@ -62,8 +62,15 @@ const WomenCollection = () => {
                                         return (
                                             <div key={product._id} className="group">
                                                 <Link
-                                                    href="/shop/[category]/[subCategory]"
-                                                    as={`/shop/${product.category}/${product.subCategory}`}
+                                                    href={{
+                                                        pathname: "/shop",
+                                                        query: {
+                                                            category: product?.category,
+                                                            subcategory: product?.subCategory,
+                                                        },
+                                                    }}
+                                                    key={product?.name}
+                                                    className="block text-sm text-gray-600 hover:text-black transition-colors"
                                                 >
                                                     <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
                                                         <Image
