@@ -10,7 +10,7 @@ import { ProductCardProps } from '@/types/productProps';
 const ShopContent = () => {
     const params = useSearchParams();
     const category = params.get('category');
-    const subCategory = params.get('subCategory');
+    const subCategory = params.get('subcategory');
     const [products, setProducts] = useState<ProductCardProps[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 

@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card"
 import { PhoneInput } from "./PhoneInput/PhoneInput"
 import axios from "axios"
 import { useState } from "react"
+import toast, { Toaster } from "react-hot-toast"
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -44,24 +45,31 @@ export default function ContactForm() {
     const [isLoading, setIsLoading] = useState(false)
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        setIsLoading(true)
+        setIsLoading(true);
 
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`, values);
             form.reset();
             console.log("Order saved and emails sent:", response.data);
-            alert("Order submitted successfully!");
 
+            // Success toast notification
+            toast.success("Your bulk order has been received and confirmation emails have been sent.");
         } catch (error) {
             console.error("Error submitting order:", error);
-            alert("Failed to submit order. Please try again.");
-        }
-        setIsLoading(false)
 
+            // Error toast notification with details
+            const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : "An unexpected error occurred. Please try again.";
+
+            toast.error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
-        <div>
+        <div className="mb-8">
             <div className="grid mt-6 gap-8 lg:grid-cols-2">
                 {/* Form Section */}
                 <div>
@@ -208,7 +216,7 @@ export default function ContactForm() {
 
                             <Button
                                 type="submit"
-                                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 cursor-pointer"
+                                className="w-full text-white bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-800 cursor-pointer"
                                 disabled={isLoading}
                             >
                                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
@@ -266,6 +274,7 @@ export default function ContactForm() {
                     </div>
                 </div>
             </div>
+            <Toaster />
         </div>
     )
 }
