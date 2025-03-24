@@ -7,8 +7,6 @@ import { useEffect, useState } from "react"
 interface NavItemsProps {
     isOpen: boolean
 }
-
-
 export default function NavItems({ isOpen }: NavItemsProps) {
     const [navData, setNavData] = useState<navProps[]>([]);
     useEffect(() => {
@@ -30,8 +28,13 @@ export default function NavItems({ isOpen }: NavItemsProps) {
                             <div className="space-y-2">
                                 {category.items.map((item) => (
                                     <Link
-                                        href="/shop/[category]/[subCategory]"
-                                        as={`/shop/${category.title}/${item.name}`}
+                                        href={{
+                                            pathname: "/shop",
+                                            query: {
+                                                category: category.title,
+                                                subcategory: item.name,
+                                            },
+                                        }}
                                         key={item.name}
                                         className="block text-sm text-gray-600 hover:text-black transition-colors"
                                     >

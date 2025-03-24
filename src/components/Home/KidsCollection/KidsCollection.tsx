@@ -61,12 +61,18 @@ const KidsCollection = () => {
                                         const randomImage = coverImg.length > 0 ? coverImg[Math.floor(Math.random() * coverImg.length)].src : "default.jpg";
                                         return (
                                             <div key={product._id} className="group">
-
                                                 <Link
-                                                    href="/shop/[category]/[subCategory]"
-                                                    as={`/shop/${product.category}/${product.subCategory}`}
+                                                    href={{
+                                                        pathname: "/shop",
+                                                        query: {
+                                                            category: product?.category,
+                                                            subcategory: product?.subCategory,
+                                                        },
+                                                    }}
+                                                    key={product?.name}
+                                                    className="block text-sm text-gray-600 hover:text-black transition-colors"
                                                 >
-
+                                                    {product?.name}
                                                     <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
                                                         <Image
                                                             src={randomImage}
@@ -90,8 +96,8 @@ const KidsCollection = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     )
 }
 
