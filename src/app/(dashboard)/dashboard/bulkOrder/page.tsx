@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import getProducts from "@/apiAction/getProducts";
 
 const Page = () => {
   interface Order {
@@ -25,11 +26,19 @@ const Page = () => {
   const [orderData, setOrderData] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
+  // useEffect(() => {
+  //   fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`)
+  //     .then((res) => res.json())
+  //     .then((data) => setOrderData(data));
+  // }, []);
+
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`)
-      .then((res) => res.json())
-      .then((data) => setOrderData(data));
-  }, []);
+    const fetchBulkProduct = async () => {
+      const response = await getProducts({ products: `/bulkOrder` })
+      setOrderData(response)
+    }
+    fetchBulkProduct()
+  }, [])
 
   return (
     <div className="container mx-auto p-4">
