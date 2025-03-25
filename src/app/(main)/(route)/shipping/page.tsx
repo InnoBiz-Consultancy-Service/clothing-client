@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { px } from "framer-motion";
+
 import Image from "next/image.js";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -44,9 +44,9 @@ const Checkout = () => {
   // Calculate Order Summary
   const subTotal = cartData.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const shipping = subTotal > 500 ? 0 : 20;
-  const discount = 20;
-  const tax = subTotal * 0.1;
-  const total = subTotal + tax + shipping - discount;
+  const discount = 0;
+ const tax = 0;
+  const total = subTotal+tax + shipping - discount;
 
   return (
     <div className="max-w-6xl mx-auto p-6  gap-8">
@@ -126,7 +126,8 @@ const Checkout = () => {
           <p className="flex  justify-between"><span>Subtotal:</span> <span>${subTotal.toFixed(2)}</span></p>
           <p className="flex justify-between"><span>Shipping:</span> <span>${shipping.toFixed(2)}</span></p>
           <p className="flex justify-between"><span>Discount:</span> <span>-${discount.toFixed(2)}</span></p>
-          <p className="flex justify-between"><span>Tax (10%):</span> <span>${tax.toFixed(2)}</span></p>
+          <p className="flex justify-between"><span>Tax:</span> <span>-${tax.toFixed(2)}</span></p>
+        
           <p className="flex justify-between font-bold text-lg"><span>Total:</span> <span>${total.toFixed(2)}</span></p>
         </div>
 
@@ -134,7 +135,7 @@ const Checkout = () => {
         <button 
           type="submit" 
           onClick={handleSubmit(onSubmit)}
-          className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+          className="mt-4 w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-800 hover:to-purple-700 text-white py-2 rounded-lg  transition"
         >
           Submit Order
         </button>
