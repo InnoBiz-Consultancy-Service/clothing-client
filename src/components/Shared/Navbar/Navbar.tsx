@@ -173,7 +173,7 @@ export default function Navbar() {
                         <SheetContent side="left" className="overflow-y-auto h-screen ">
                             <div className="p-4 mt-6">
                                 <Accordion type="single" collapsible>
-                                    {navItems.map((category) => (
+                                    {navItems?.map((category) => (
                                         <AccordionItem value={category.link} key={category.title} className="border-none">
                                             <AccordionTrigger className="cursor-pointer">
                                                 <h3 className="text-base font-semibold mb-2 ">{category.title}</h3>

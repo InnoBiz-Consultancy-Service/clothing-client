@@ -416,11 +416,11 @@ const ShopFilter = () => {
 
   // Update URL when filters change
   useEffect(() => {
-    if (categories.length === 0) return
+    if (categories?.length === 0) return
 
     const params = new URLSearchParams(window.location.search)
 
-    if (selectedCategories.length > 0) {
+    if (selectedCategories?.length > 0) {
       params.set("category", selectedCategories.join(","))
     } else {
       params.delete("category")
@@ -440,32 +440,32 @@ const ShopFilter = () => {
     <div className="w-full max-h-screen overflow-y-auto space-y-6">
       <h3 className="text-lg font-semibold">Filter Products</h3>
       <div className="space-y-6">
-        {categories.map((category: navProps) => (
+        {categories?.map((category: navProps) => (
           <div key={category._id} className="space-y-3">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id={`category-${category._id}`}
-                checked={selectedCategories.includes(category.title)}
+                checked={selectedCategories?.includes(category.title)}
                 onCheckedChange={() => handleCategoryChange(category.title)}
               />
               <Label htmlFor={`category-${category._id}`} className="text-sm font-medium cursor-pointer">
-                {category.title}
+                {category?.title}
               </Label>
             </div>
-            {category.items && category.items.length > 0 && (
+            {category?.items && category.items.length > 0 && (
               <div className="space-y-2 pl-6">
-                {category.items.map((subcategory) => (
+                {category?.items.map((subcategory) => (
                   <div key={`${category._id}-${subcategory.name}`} className="flex items-center space-x-2">
                     <Checkbox
                       id={`${category._id}-${subcategory.name}`}
-                      checked={selectedSubcategories.includes(subcategory.name)}
+                      checked={selectedSubcategories?.includes(subcategory.name)}
                       onCheckedChange={() => handleSubcategoryChange(subcategory.name)}
                     />
                     <Label
                       htmlFor={`${category._id}-${subcategory.name}`}
                       className="text-sm font-normal cursor-pointer"
                     >
-                      {subcategory.name}
+                      {subcategory?.name}
                     </Label>
                   </div>
                 ))}
