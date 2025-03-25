@@ -22,11 +22,11 @@ export default function NavItems({ isOpen }: NavItemsProps) {
         <div className="absolute -left-[200px] top-full z-50 w-screen bg-white shadow-md">
             <div className="container mx-auto py-8">
                 <div className="grid grid-cols-1 md:grid-cols-7 gap-8">
-                    {navData.map((category) => (
+                    {navData?.map((category) => (
                         <div key={category.title} className="mb-6 md:mb-0">
                             <h3 className="text-sm font-medium mb-3">{category.title}</h3>
                             <div className="space-y-2">
-                                {category.items.map((item) => (
+                                {category?.items.map((item) => (
                                     <Link
                                         href={{
                                             pathname: "/shop",
