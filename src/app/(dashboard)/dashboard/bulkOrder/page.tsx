@@ -57,8 +57,8 @@ const Page = () => {
                 </tr>
               </thead>
               <tbody>
-                {orderData.length > 0 ? (
-                  orderData.map((order, index) => (
+                {orderData?.length > 0 ? (
+                  orderData?.map((order, index) => (
                     <tr key={index} className="border-b hover:bg-gray-50">
                       <td className="p-3 border">{order.name}</td>
                       <td className="p-3 border">{order.email}</td>

@@ -206,6 +206,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
+import toast, { Toaster } from "react-hot-toast"
 
 const formSchema = z
     .object({
@@ -261,6 +262,7 @@ export default function RegistrationPage() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // console.log(values)
         setIsLoading(true)
+        // console.log(userData)
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/register`, {
                 method: "POST",
@@ -273,18 +275,16 @@ export default function RegistrationPage() {
             const data = await response.json()
 
             if (response.ok) {
-                //To DO: Ai khane alert er poriborte toast use kora jabe...
-                alert("Registration successful")
+
+                toast.success("Registration successful")
                 form.reset()
                 router.push('/login')
             } else {
-                //To DO: ai khane alert er poriborte toast use kora jabe...
-                alert("Registration failed")
+                toast.error("Registration failed")
                 console.error("Registration Error:", data)
             }
         } catch (error) {
-            // To DO: Ai khane alert er poriborte toast use kora jabe...
-            alert("An error occurred")
+            toast.error("An error occurred")
             console.error("Error:", error)
         } finally {
             setIsLoading(false)
@@ -419,6 +419,7 @@ export default function RegistrationPage() {
                     <span className="font-medium text-emerald-600 hover:text-emerald-800">Login</span>
                 </Link>
             </div>
+            <Toaster />
         </div>
     )
 }
