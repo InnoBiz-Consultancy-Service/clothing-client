@@ -9,23 +9,24 @@ import getProducts from "@/apiAction/getProducts"
 import { ProductProps } from "@/types/productProps"
 import { Loader } from "@/components/Loader/Loader"
 
-export default function ProductDetails() {
+export default function ProductDetails({ params }: { params: { id: string } }) {
   const [details, setDetails] = useState<ProductProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const id = typeof window !== "undefined" ? window.location.pathname.split("/").pop() : null;
+  const id = params.id;
 
   useEffect(() => {
     if (!id) {
-      setError("Product ID not found in the URL.");
+      setError("Product ID not found");
       setLoading(false);
       return;
     }
 
     const fetchProductDetails = async () => {
       try {
-        const response = await getProducts({ products: `/products/${id}` });
+        // const response = await getProducts({ products: `/products/${id}` });
+        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+        const response = await getProducts({ products: `${baseUrl}/products/${id}` });
         setDetails(response);
       } catch (err) {
         setError(`Failed to fetch product details. ${err}`);
