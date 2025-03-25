@@ -27,6 +27,7 @@ import { usePathname } from "next/navigation"
 import getProducts from "@/apiAction/getProducts"
 import { Loader } from "@/components/Loader/Loader"
 import { ProductCardProps } from "@/types/productProps"
+import getUsers from "@/apiAction/getUsers"
 
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
@@ -36,8 +37,9 @@ export default function Navbar() {
     const [, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
     const [searchProduct, setSearchProduct] = useState<ProductCardProps[]>([])
-    const session = useSession()
+    const { data: session } = useSession();
     const [isLoading, setIsLoading] = useState(false)
+    const [admin, setAdmin] = useState<boolean>();
 
     useEffect(() => {
         const navbarData = async () => {
@@ -53,7 +55,6 @@ export default function Navbar() {
 
         navbarData()
     }, [])
-
     useEffect(() => {
         setOpen(false)
     }, [pathname])
@@ -87,7 +88,16 @@ export default function Navbar() {
         return () => clearTimeout(debounceTimer)
     }, [searchQuery])
 
-
+    // Admin check
+    const email = session?.user?.email;
+    useEffect(() => {
+        const checkAdmin = async () => {
+            const response = await getUsers({ admin: `/users/check-admin?email=${email}` })
+            const check = response.isAdmin;
+            setAdmin(check)
+        }
+        checkAdmin();
+    }, [email])
     return (
         <header className="border-b border-gray-200 bg-white">
             <div className=" flex h-16 items-center justify-between px-4">
@@ -153,7 +163,7 @@ export default function Navbar() {
                         </Button>
                     </Link>
 
-                    {session.status === "authenticated" && (
+                    {admin === true && (
                         <>
                             <Link href={"/dashboard"}>
                                 <Button variant="outline" className="text-gray-700 cursor-pointer">
