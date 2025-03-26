@@ -140,8 +140,8 @@ const Page = () => {
                 setCurrentPage(1);
               }}
               className={`px-4 py-2 rounded-md ${selectedCategory === nav.title
-                  ? "bg-gray-900 text-white"
-                  : "bg-transparent text-black border-2"
+                ? "bg-gray-900 text-white"
+                : "bg-transparent text-black border-2"
                 }`}
             >
               {nav.title}
