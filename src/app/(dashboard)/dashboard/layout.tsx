@@ -1,11 +1,14 @@
+"use client"
+import { FC, ReactNode } from 'react';
 import Slider from "@/components/Dashboard/Slider/Slider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import withAdminAuth from '@/components/Secure/WithAdminAuth';
 
-export default function DashboardLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+interface DashboardLayoutProps {
+    children?: ReactNode;
+}
+
+const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
     return (
         <div className="flex h-screen overflow-hidden">
             <SidebarProvider>
@@ -17,6 +20,7 @@ export default function DashboardLayout({
                 </SidebarInset>
             </SidebarProvider>
         </div>
-    )
-}
+    );
+};
 
+export default withAdminAuth(DashboardLayout);

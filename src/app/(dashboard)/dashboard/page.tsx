@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Bar, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from "chart.js";
+import withAdminAuth from "@/components/Secure/WithAdminAuth";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -187,4 +188,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAdminAuth(Dashboard);
