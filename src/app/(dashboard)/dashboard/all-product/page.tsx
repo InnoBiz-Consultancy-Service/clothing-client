@@ -1,5 +1,6 @@
 "use client";
 
+import withAdminAuth from "@/components/Secure/WithAdminAuth";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -154,4 +155,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAdminAuth(Page)

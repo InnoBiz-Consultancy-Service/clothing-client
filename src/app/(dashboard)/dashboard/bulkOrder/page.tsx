@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import getProducts from "@/apiAction/getProducts";
+import withAdminAuth from "@/components/Secure/WithAdminAuth";
 
 const Page = () => {
   interface Order {
@@ -155,4 +156,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAdminAuth(Page)
