@@ -66,7 +66,7 @@ const Dashboard = () => {
       }
     });
 
-    console.log("Category Product Count:", categories);
+    // console.log("Category Product Count:", categories);
 
     return {
       labels: Object.keys(categories),

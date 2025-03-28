@@ -1,88 +1,271 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { CircleX } from "lucide-react";
+import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+
+type CartItem = {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  images: { src: string }[];
+  color?: string;
+  size?: string;
+};
 
 const CartPage = () => {
-  const [cartData, setCartData] = useState<
-    { price: number; quantity: number; image: string; name: string; color: string; size: string }[]
-  >([]);
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  console.log(cartData)
 
   useEffect(() => {
-    axios.get("cartData.json").then((res) => setCartData(res.data));
+    const loadCartData = () => {
+      try {
+        const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+        const formattedItems = items.map((item: Partial<CartItem>) => ({
+          ...item,
+          price: Number(item.price) || 0,
+          quantity: Number(item.quantity) || 1,
+        }));
+        setCartData(formattedItems);
+      } catch (error) {
+        console.error("Error loading cart data:", error);
+        setCartData([]);
+      }
+    };
+
+    loadCartData();
   }, []);
 
-  const updateQuantity = (index: number, amount: number) => {
-    setCartData((prevCart) => {
-      const newCart = [...prevCart];
-      newCart[index].quantity = Math.max(1, newCart[index].quantity + amount);
-      return newCart;
+
+  const updateQuantity = (index: number, newQuantity: number) => {
+    setCartData(prevCart => {
+      const updatedCart = [...prevCart];
+      updatedCart[index] = {
+        ...updatedCart[index],
+        quantity: Math.max(1, newQuantity)
+      };
+      localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+      return updatedCart;
     });
   };
 
   const totalPrice = cartData.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  // handleRemoveProduct
+  const handleRemoveProduct = async (id: string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will remove the item from your cart",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const updatedCartItems = cartData.filter((item) => item._id !== id);
+        setCartData(updatedCartItems);
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+
+        Swal.fire({
+          title: "Removed!",
+          text: "The item has been removed from your cart.",
+          icon: "success",
+        });
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: "An error occurred while removing the item.",
+          icon: "error",
+        });
+        console.error(err);
+      }
+    }
+  };
+
+
+  // handleProceedButton
+  const handleProceedButton = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!session) {
+      toast.error("Please login to proceed to checkout.")
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+      return;
+    }
+
+    const selectedProducts = cartData.map((item) => ({
+      productId: item._id,
+      quantity: item.quantity,
+    }));
+
+    // console.log(selectedProducts)
+    const email = session.user?.email;
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/carts/add-to-cart`,
+        {
+          products: selectedProducts,
+          email: email,
+        }
+      );
+      toast.success('Products added to cart successfully!');
+
+      // Optional: redirect to checkout
+      router.push("/shipping");
+    } catch {
+      toast.error('Failed to add products to cart');
+
+    }
+  };
+
+
+
   return (
-    <div className="p-4 bg-gray-100 min-h-screen flex justify-center">
+    <div className="p-4 bg-gray-100 flex justify-center">
       <div className="w-full max-w-4xl bg-white p-4 sm:p-6 rounded-lg shadow-md">
         <h1 className="text-xl sm:text-2xl font-semibold mb-4 text-center">
-          Cart <span className="text-gray-500">({cartData.length} products)</span>
+          Your Cart <span className="text-gray-500">({cartData.length} items)</span>
         </h1>
-        <div className="border-b pb-4 mb-4 overflow-x-auto">
-          <table className="w-full border-collapse text-sm sm:text-base">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2">Image</th>
-                <th className="p-2">Product</th>
-                <th className="p-2">Quantity</th>
-                <th className="p-2">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartData.map((item, index) => (
-                <tr key={index} className="text-center border">
-                  <td className="p-2 flex justify-center items-center">
-                    <div className="border rounded-lg p-2 bg-gray-100 w-16 h-16 flex items-center justify-center">
-                      <Image src={item.image} alt={item.name} width={60} height={60} className="w-12 sm:w-16 h-12 sm:h-16 object-cover rounded" />
-                    </div>
-                  </td>
-                  <td className="p-2 max-w-[100px] sm:max-w-none truncate">{item.name}</td>
-                  <td className="p-2 flex justify-center items-center gap-2">
-                    <button className="px-2 py-1 border rounded-md" onClick={() => updateQuantity(index, -1)}>
-                      -
-                    </button>
-                    <span className="text-lg">{item.quantity}</span>
-                    <button className="px-2 py-1 border rounded-md" onClick={() => updateQuantity(index, 1)}>
-                      +
-                    </button>
-                  </td>
-                  <td className="p-2">${(item.price * item.quantity).toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="mt-6 p-4 border rounded-lg text-sm sm:text-base">
-          <div className="flex justify-between font-semibold">
-            <span>Subtotal:</span>
-            <span>${totalPrice.toFixed(2)}</span>
+
+        {cartData.length === 0 ? (
+          <div className="text-center py-10">
+            <p className="text-lg">Your cart is empty</p>
+            <Link href="/shop">
+              <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
+                Continue Shopping
+              </button>
+            </Link>
           </div>
-          <div className="flex justify-between mt-2">
-            <span>Discount:</span>
-            <span>-$0.00</span>
-          </div>
-          <div className="flex justify-between text-lg font-bold mt-2">
-            <span>Total:</span>
-            <span>${totalPrice.toFixed(2)}</span>
-          </div>
-          <Link href="/shipping">
-            <button className="w-full mt-4 p-3 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-800 hover:to-purple-700 text-white rounded-lg">
-              Continue to checkout
-            </button>
-          </Link>
-        </div>
+        ) : (
+          <>
+            <div className="border-b pb-4 mb-4 overflow-x-auto">
+              <table className="w-full border-collapse text-sm sm:text-base">
+                <thead>
+                  <tr className="bg-gray-200">
+                    <th className="p-2 text-left">Image</th>
+                    <th className="p-2 text-left">Product Name</th>
+                    <th className="p-2">Quantity</th>
+                    <th className="p-2 text-right">Price</th>
+                    <th className="p-2 text-left">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cartData.map((item, index) => (
+                    <tr key={item._id} className="border-b hover:bg-gray-50 transition-colors">
+                      <td className="p-2 text-center align-middle">
+                        <div className="w-16 h-16 flex items-center justify-center mx-auto my-2">
+                          {item.images?.length > 0 ? (
+                            <Image
+                              src={item.images[0].src}
+                              alt={item.name}
+                              width={64}
+                              height={64}
+                              className="object-cover rounded"
+                            />
+                          ) : (
+                            <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                              <span className="text-xs text-gray-500">No Image</span>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+
+                      <td className="p-2">
+                        <Link
+                          href={`/product-details/${item._id}`}
+                          className="font-medium hover:underline hover:text-blue-600 transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                        {(item.color || item.size) && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            {item.color && <span>Color: {item.color}</span>}
+                            {item.color && item.size && <span className="mx-1">|</span>}
+                            {item.size && <span>Size: {item.size}</span>}
+                          </div>
+                        )}
+                      </td>
+
+                      <td className="p-2 text-center align-middle">
+                        <div className="flex justify-center items-center gap-2">
+                          <button
+                            className="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+                            onClick={() => updateQuantity(index, item.quantity - 1)}
+                            aria-label="Decrease quantity"
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <button
+                            className="w-8 h-8 border rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+                            onClick={() => updateQuantity(index, item.quantity + 1)}
+                            aria-label="Increase quantity"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </td>
+
+                      <td className="p-2 text-right align-middle">
+                        {(item.price * item.quantity).toFixed(2)} tk
+                      </td>
+
+                      <td className="p-2 text-center align-middle">
+                        <button
+                          onClick={() => handleRemoveProduct(item._id)}
+                          className="hover:text-red-500 transition-colors cursor-pointer"
+                          aria-label="Remove item"
+                        >
+                          <CircleX className="w-6 h-6" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+              <div className="flex justify-between font-semibold">
+                <span>Subtotal:</span>
+                <span>{totalPrice.toFixed(2)} tk</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span>Shipping Charge:</span>
+                <span>0.00 tk</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold mt-2 pt-2 border-t">
+                <span>Total:</span>
+                <span>{totalPrice.toFixed(2)} tk</span>
+              </div>
+
+              <button
+                className="w-full mt-4 p-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg cursor-pointer transition-colors"
+                onClick={handleProceedButton}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </>
+        )}
       </div>
+      <Toaster />
+
     </div>
   );
 };
