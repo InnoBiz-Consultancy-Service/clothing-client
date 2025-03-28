@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 import getProducts from "@/apiAction/getProducts"
 import { ProductProps } from "@/types/productProps"
 import { Loader } from "@/components/Loader/Loader"
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function ProductDetails({ params }: { params: { id: string } }) {
   const [details, setDetails] = useState<ProductProps | null>(null);
@@ -36,6 +38,32 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
     };
     fetchProductDetails();
   }, [id]);
+
+
+
+  // handleAddToCart 
+  const handleAddToCart = (details: ProductProps | null) => {
+    try {
+      // Save product to local storage
+      const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+
+      const isProductInCart: boolean = cartItems.some((item: ProductProps) => item._id === details?._id);
+
+      if (!isProductInCart) {
+        cartItems.push(details);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        if (details) {
+          toast.success(`${details.name} added to cart successfully!`);
+        }
+      } else {
+        toast.error(`${details?.name} is already in the cart!`)
+      }
+    } catch {
+      toast.error("Failed to add product to cart. Please try again.")
+
+    }
+  }
+
 
   if (loading) {
     return <div className="container mx-auto flex justify-center h-screen items-center px-4 py-8">
@@ -120,6 +148,19 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
             </div>
           </div>
 
+          <div>
+            <div className="flex flex-wrap gap-2 cursor-pointer">
+              <Button
+                variant="outline"
+                className="h-10 px-4 cursor-pointer bg-blue-200"
+                onClick={() => handleAddToCart(details)}
+              >
+                Add To Cart
+              </Button>
+            </div>
+          </div>
+
+
           <div className="pt-4 border-t border-border">
             <div className="flex items-center space-x-2">
               <Badge variant="outline" className="px-3 py-1">
@@ -131,6 +172,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
+        <Toaster />
       </div>
     </div>
   );

@@ -147,6 +147,15 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="flex items-center gap-4">
+
+                    {!admin && (
+                        <Link href={"/cartPage"}>
+                            <Button variant="outline" className="text-gray-700 cursor-pointer">
+                                <ShoppingCart />
+                            </Button>
+                        </Link>
+                    )}
+
                     <Link href={"/OrderBulk"}>
                         <Button variant="outline" className="text-gray-700 cursor-pointer">
                             <ShoppingCart /> Order Bulk
