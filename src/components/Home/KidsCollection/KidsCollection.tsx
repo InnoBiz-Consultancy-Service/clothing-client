@@ -48,7 +48,7 @@ const KidsCollection = () => {
                                             <span className="block font-semibold">Collection</span>
                                         </h3>
                                         <div className="h-px w-12 bg-white mb-3"></div>
-                                        <button className="bg-white bg-opacity-20 text-white text-xs uppercase tracking-wider py-1 px-3 backdrop-blur-sm border border-white/30 hover:bg-white hover:text-gray-900 transition-all duration-300">
+                                        <button className="bg-white bg-opacity-20 text-black text-xs uppercase tracking-wider py-1 px-3 backdrop-blur-sm border border-white/30 hover:bg-white hover:text-gray-900 transition-all duration-300">
                                             Explore
                                         </button>
                                     </div>

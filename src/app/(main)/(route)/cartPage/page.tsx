@@ -222,7 +222,7 @@ const CartPage = () => {
                       </td>
 
                       <td className="p-2 text-right align-middle">
-                        {(item.price * item.quantity).toFixed(2)} tk
+                        {(item.price * item.quantity)} tk
                       </td>
 
                       <td className="p-2 text-center align-middle">
@@ -243,7 +243,7 @@ const CartPage = () => {
             <div className="mt-6 p-4 border rounded-lg bg-gray-50">
               <div className="flex justify-between font-semibold">
                 <span>Subtotal:</span>
-                <span>{totalPrice.toFixed(2)} tk</span>
+                <span>{totalPrice} tk</span>
               </div>
               <div className="flex justify-between mt-2">
                 <span>Shipping Charge:</span>
@@ -251,7 +251,7 @@ const CartPage = () => {
               </div>
               <div className="flex justify-between text-lg font-bold mt-2 pt-2 border-t">
                 <span>Total:</span>
-                <span>{totalPrice.toFixed(2)} tk</span>
+                <span>{totalPrice} tk</span>
               </div>
 
               <button

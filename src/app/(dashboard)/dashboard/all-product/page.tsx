@@ -3,7 +3,12 @@
 import withAdminAuth from "@/components/Secure/WithAdminAuth";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { CircleX } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Page = () => {
   const [navbar, setNavbar] = useState<{ _id: string; title: string }[]>([]);
@@ -24,10 +29,12 @@ const Page = () => {
     subCategory: string;
     price: number;
     description?: string;
+    images?: { src: string }[];
   }
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchNavbar = async () => {
@@ -121,6 +128,50 @@ const Page = () => {
     setCurrentPage(newPage);
   };
 
+
+  // handleRemoveProduct
+  const handleRemoveProduct = async (id: string) => {
+
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will remove the item from your Product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
+    });
+
+    // If user confirms deletion
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/products/product-delete/${id}`
+        );
+
+        await Swal.fire({
+          title: "Removed!",
+          text: "The item has been removed from your Product.",
+          icon: "success",
+        });
+
+        router.push('/all-product')
+
+      } catch (error) {
+        // Show error message
+        await Swal.fire({
+          title: "Error!",
+          text: "An error occurred while removing the item.",
+          icon: "error",
+        });
+
+        console.error("Error removing product:", error);
+      }
+    }
+  };
+
+
+
   return (
     <div className="p-6">
       {/* Category Tabs */}
@@ -181,18 +232,46 @@ const Page = () => {
               <table className="min-w-full border border-gray-300">
                 <thead className="bg-[#364153] text-white">
                   <tr>
+                    <th className="py-2 px-4 text-start border-b">Image</th>
                     <th className="py-2 px-4 text-start border-b">Name</th>
                     <th className="py-2 px-4 text-start border-b">Subcategory</th>
                     <th className="py-2 px-4 text-start border-b">Price</th>
                     <th className="py-2 px-4 text-start border-b">Actions</th>
+                    <th className="py-2 px-4 text-start border-b">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((product) => (
                     <tr key={product._id} className="hover:bg-gray-50">
-                      <td className="py-2 px-4 border-b">{product.name}</td>
+
+                      <td className="p-2 text-center align-middle">
+                        <div className="w-16 h-16 flex items-center justify-center mx-auto my-2">
+                          {(product.images ?? []).length > 0 ? (
+                            <Image
+                              src={product.images?.[0]?.src || ""}
+                              alt={product.name}
+                              width={64}
+                              height={64}
+                              className="object-cover rounded"
+                            />
+                          ) : (
+                            <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                              <span className="text-xs text-gray-500">No Image</span>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+
+                      <td className="py-2 px-4 border-b">
+                        <Link
+                          className="hover:underline hover:text-blue-600 transition-colors"
+                          href={`/product-details/${product._id}`}
+                        >
+                          {product.name}
+                        </Link>
+                      </td>
                       <td className="py-2 px-4 border-b">{product.subCategory}</td>
-                      <td className="py-2 px-4 border-b">${product.price}</td>
+                      <td className="py-2 px-4 border-b">{product.price} tk</td>
                       <td className="py-2 px-4 border-b">
                         <Button
                           onClick={() => openModal(product)}
@@ -201,6 +280,16 @@ const Page = () => {
                         >
                           View Details
                         </Button>
+                      </td>
+
+                      <td className="p-2 text-center align-middle">
+                        <button
+                          onClick={() => handleRemoveProduct(product._id)}
+                          className="hover:text-red-500 transition-colors cursor-pointer"
+                          aria-label="Remove item"
+                        >
+                          <CircleX className="w-6 h-6" />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -264,7 +353,12 @@ const Page = () => {
 
       {/* Product Details Modal */}
       {isModalOpen && selectedProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0  flex items-center justify-center p-4 z-50"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(1px)',
+            WebkitBackdropFilter: 'blur(1px)'
+          }}>
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
             <h2 className="text-xl font-bold mb-4">{selectedProduct.name}</h2>
             <div className="space-y-2">
@@ -277,6 +371,7 @@ const Page = () => {
               <Button
                 onClick={closeModal}
                 variant="destructive"
+                className="cursor-pointer"
               >
                 Close
               </Button>
