@@ -16,4 +16,5 @@ export interface ProductCardProps {
   name: string;
   price: number;
   images: { src: string }[];
+  category: string | null
 }
