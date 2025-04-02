@@ -1,5 +1,6 @@
 "use client"
 import getProducts from '@/apiAction/getProducts'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { ProductProps } from '@/types/productProps'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -57,10 +58,11 @@ const MenCollection = () => {
                             <div className="md:col-span-9">
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                     {mensProduct.map((product) => {
-                                        const coverImg = Array.isArray(product.images) ? product.images : [];
-                                        const randomImage = coverImg.length > 0 ? coverImg[Math.floor(Math.random() * coverImg.length)].src : "default.jpg";
                                         return (
-                                            <div key={product._id} className="group">
+                                            <Card
+                                                key={product._id}
+                                                className="relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg h-[250px] transition-all duration-300 hover:shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200"
+                                            >
                                                 <Link
                                                     href={{
                                                         pathname: "/shop",
@@ -69,27 +71,35 @@ const MenCollection = () => {
                                                             subcategory: product?.subCategory,
                                                         },
                                                     }}
-                                                    key={product?.name}
-                                                    className="block text-sm text-gray-600 hover:text-black transition-colors"
+                                                    className="block"
                                                 >
-                                                    <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
-                                                        <Image
-                                                            src={randomImage}
-                                                            alt={product.name}
-                                                            width={200}
-                                                            height={200}
-                                                            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                                                        />
-                                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-2 px-3">
-
-                                                            <p className="text-white font-bold">
-                                                                {product.subCategory}
-                                                            </p>
+                                                    <CardHeader className="p-0 relative">
+                                                        <div className="relative h-[150px] rounded-t overflow-hidden group">
+                                                            <Image
+                                                                src={product?.images[0].src || "/fallback.jpg"}
+                                                                alt={product?.name || "Product Image"}
+                                                                fill
+                                                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                                sizes="(max-width: 768px) 100vw, 300px"
+                                                                loading="lazy"
+                                                            />
                                                         </div>
+                                                    </CardHeader>
+
+                                                    <CardContent className="p-5 bg-white/90 backdrop-blur-lg">
+                                                        <h3 className="text-2xl font-semibold text-gray-800 line-clamp-1 transition-all hover:underline cursor-pointer">
+                                                            {product?.subCategory}
+                                                        </h3>
+                                                    </CardContent>
+
+                                                    <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                                        <button className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-md hover:bg-gray-900 transition-all">
+                                                            View More
+                                                        </button>
                                                     </div>
                                                 </Link>
-                                            </div>
-                                        )
+                                            </Card>
+                                        );
                                     })}
                                 </div>
                             </div>
