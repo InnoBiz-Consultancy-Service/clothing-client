@@ -10,6 +10,7 @@ import Image from "next/image"
 import { X, Upload, ImageIcon, Plus } from "lucide-react"
 import { toast, Toaster } from "react-hot-toast"
 import axios from "axios"
+import { useSession } from "next-auth/react"
 
 const schema = z.object({
     name: z.string().min(3, "Product name must be at least 3 characters long"),
@@ -55,7 +56,8 @@ export function ProductForm() {
     const [newSubCategory, setNewSubCategory] = useState<string>("")
     const [showAddCategory, setShowAddCategory] = useState<boolean>(false)
     const [showAddSubCategory, setShowAddSubCategory] = useState<boolean>(false)
-
+    const { data } = useSession();
+    const userEmail = data?.user?.email;
     const {
         register,
         handleSubmit,
@@ -257,8 +259,10 @@ export function ProductForm() {
             // Prepare the data to be sent
             const postData = {
                 ...data,
+                email: userEmail,
                 images: formattedImages,
             }
+            console.log(postData)
 
             // Send the data to the backend
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/products/add-product`, postData, {
