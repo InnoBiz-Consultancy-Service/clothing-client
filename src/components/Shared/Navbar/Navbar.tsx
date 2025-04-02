@@ -28,6 +28,18 @@ import { Loader } from "@/components/Loader/Loader"
 import { ProductCardProps } from "@/types/productProps"
 import useAdmin from "@/hooks/useAdmin"
 
+
+type CartItem = {
+    _id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    images: { src: string }[];
+    color?: string;
+    size?: string;
+};
+
+
 export default function Navbar() {
     const [isShopOpen, setIsShopOpen] = useState(false)
     const [open, setOpen] = useState<boolean>(false)
@@ -88,6 +100,36 @@ export default function Navbar() {
     }, [searchQuery])
     // call useAdmin and check
     const admin = useAdmin()
+
+
+
+    {/* cart length update button  */ }
+
+    const [cartData, setCartData] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        const loadCartData = () => {
+            try {
+                const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+                const formattedItems = items.map((item: Partial<CartItem>) => ({
+                    ...item,
+                    price: Number(item.price) || 0,
+                    quantity: Number(item.quantity) || 1,
+                }));
+                setCartData(formattedItems);
+            } catch {
+                setCartData([]);
+            }
+        };
+        loadCartData();
+        const intervalId = setInterval(loadCartData, 1000);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
+
+
+
     return (
         <header className="border-b border-gray-200 bg-white">
             <div className=" flex h-16 items-center justify-between px-4">
@@ -145,13 +187,23 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Cart */}
+
                 <div className="flex items-center gap-4">
 
+                    {/* cart length update button  */}
                     {!admin && (
                         <Link href={"/cartPage"}>
-                            <Button variant="outline" className="text-gray-700 cursor-pointer">
+                            <Button variant="outline" className="text-gray-700 cursor-pointer relative">
                                 <ShoppingCart />
+                                {cartData.length > 0 ? (
+                                    <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                        {cartData.length}
+                                    </span>
+                                ) :
+                                    <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                        {cartData.length}
+                                    </span>
+                                }
                             </Button>
                         </Link>
                     )}

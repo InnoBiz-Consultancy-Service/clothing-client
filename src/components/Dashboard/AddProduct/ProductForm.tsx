@@ -731,7 +731,7 @@ export function ProductForm() {
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? (
-                                    <span className="flex items-center justify-center">
+                                    <span className="flex items-center justify-center cursor-not-allowed">
                                         <svg
                                             className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                                             xmlns="http://www.w3.org/2000/svg"
