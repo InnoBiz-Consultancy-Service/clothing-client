@@ -72,7 +72,7 @@ const KidsCollection = () => {
                                                     key={product?.name}
                                                     className="block text-sm text-gray-600 hover:text-black transition-colors"
                                                 >
-                                                    {product?.name}
+                                                    {/* {product?.name} */}
                                                     <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
                                                         <Image
                                                             src={randomImage}
