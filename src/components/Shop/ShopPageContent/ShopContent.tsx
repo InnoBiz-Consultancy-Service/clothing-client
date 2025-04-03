@@ -90,6 +90,8 @@ const ShopContent = () => {
     const [totalPages, setTotalPages] = useState<number>(1);
     const productsPerPage = 5;
 
+    console.log(products)
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -134,18 +136,13 @@ const ShopContent = () => {
         <div className="container mx-auto mt-4 px-4">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product) => {
-                    const coverImg = Array.isArray(product.images) ? product.images : [];
-                    const randomImage =
-                        coverImg.length > 0
-                            ? coverImg[Math.floor(Math.random() * coverImg.length)].src
-                            : 'default.jpg';
                     return (
                         <ProductCard
                             key={product._id}
-                            id={product._id}
-                            title={product.name}
+                            _id={product._id}
+                            name={product.name}
                             price={product.price}
-                            imageUrl={randomImage}
+                            image={product.images[0]?.src}
                             category={product?.category || ''}
                         />
                     );

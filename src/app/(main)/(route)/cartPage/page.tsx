@@ -15,6 +15,7 @@ type CartItem = {
   price: number;
   quantity: number;
   images: { src: string }[];
+  image: { src: string }[];
   color?: string;
   size?: string;
 };
@@ -24,7 +25,7 @@ const CartPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  console.log(cartData)
+  // console.log(cartData)
 
   useEffect(() => {
     const loadCartData = () => {
@@ -169,9 +170,10 @@ const CartPage = () => {
                     <tr key={item._id} className="border-b hover:bg-gray-50 transition-colors">
                       <td className="p-2 text-center align-middle">
                         <div className="w-16 h-16 flex items-center justify-center mx-auto my-2">
-                          {item.images?.length > 0 ? (
+
+                          {item.image || (item.images && item.images[0]?.src) ? (
                             <Image
-                              src={item.images[0].src}
+                              src={typeof item.image === "string" ? item.image : item.images[0]?.src || ""}
                               alt={item.name}
                               width={64}
                               height={64}
@@ -179,7 +181,9 @@ const CartPage = () => {
                             />
                           ) : (
                             <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
-                              <span className="text-xs text-gray-500">No Image</span>
+                              <span className="text-xs text-gray-500">
+                                {item.name ? item.name.substring(0, 10) + (item.name.length > 10 ? "..." : "") : "No Image"}
+                              </span>
                             </div>
                           )}
                         </div>

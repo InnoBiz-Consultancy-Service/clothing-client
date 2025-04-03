@@ -17,6 +17,8 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
   const id = params.id;
 
+  // console.log(details)
+
   useEffect(() => {
     if (!id) {
       setError("Product ID not found");
@@ -43,6 +45,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
 
   // handleAddToCart 
   const handleAddToCart = (details: ProductProps | null) => {
+    console.log(details)
     try {
       // Save product to local storage
       const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
