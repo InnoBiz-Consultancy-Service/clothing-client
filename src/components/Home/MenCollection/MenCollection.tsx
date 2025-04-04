@@ -1,6 +1,5 @@
 "use client"
 import getProducts from '@/apiAction/getProducts'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { ProductProps } from '@/types/productProps'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,7 +27,7 @@ const MenCollection = () => {
                         <h2 className="text-3xl font-semibold tracking-wider text-gray-800 uppercase">
                             Mens Collection
                         </h2>
-                        <div className="w-20 h-[2px] bg-gray-400 mx-auto mt-1 mb-2"></div>
+                        <div className="w-20 h-[4px] rounded-2xl bg-red-500 mx-auto mt-1 mb-2"></div>
                     </header>
 
                     <div className="mb-8">
@@ -56,13 +55,10 @@ const MenCollection = () => {
                             </div>
                             {/* Products in Grid */}
                             <div className="md:col-span-9">
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
                                     {mensProduct.map((product) => {
                                         return (
-                                            <Card
-                                                key={product._id}
-                                                className="relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg h-[250px] transition-all duration-300 hover:shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200"
-                                            >
+                                            <div key={product._id} className="relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200">
                                                 <Link
                                                     href={{
                                                         pathname: "/shop",
@@ -73,10 +69,13 @@ const MenCollection = () => {
                                                     }}
                                                     className="block"
                                                 >
-                                                    <CardHeader className="p-0 relative">
-                                                        <div className="relative h-[150px] rounded-t overflow-hidden group">
+                                                    <div className="relative">
+                                                        <h3 className="absolute text-white -top-2 md:-top-4 lg:-top-2 left-1/2 z-40 transform -translate-x-1/2 bg-[#E7000B] text-lg px-2 py-1 rounded-lg shadow-md font-bold">
+                                                            {product?.subCategory}
+                                                        </h3>
+                                                        <div className="relative w-full h-56">
                                                             <Image
-                                                                src={product?.images[0].src || "/fallback.jpg"}
+                                                                src={product?.images?.[0]?.src || "/fallback.jpg"}
                                                                 alt={product?.name || "Product Image"}
                                                                 fill
                                                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -84,21 +83,9 @@ const MenCollection = () => {
                                                                 loading="lazy"
                                                             />
                                                         </div>
-                                                    </CardHeader>
-
-                                                    <CardContent className="p-5 bg-white/90 backdrop-blur-lg">
-                                                        <h3 className="text-2xl font-semibold text-gray-800 line-clamp-1 transition-all hover:underline cursor-pointer">
-                                                            {product?.subCategory}
-                                                        </h3>
-                                                    </CardContent>
-
-                                                    <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                                        <button className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-md hover:bg-gray-900 transition-all">
-                                                            View More
-                                                        </button>
                                                     </div>
                                                 </Link>
-                                            </Card>
+                                            </div>
                                         );
                                     })}
                                 </div>

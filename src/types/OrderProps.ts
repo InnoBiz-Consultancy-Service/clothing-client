@@ -7,4 +7,5 @@ export interface Order {
     quantity?: number;
     deliveryDate?: string;
     description?: string;
+    address?: string;
 }
