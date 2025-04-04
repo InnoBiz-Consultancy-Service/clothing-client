@@ -11,35 +11,21 @@ import {
 import { Button } from "@/components/ui/button";
 import getProducts from "@/apiAction/getProducts";
 import withAdminAuth from "@/components/Secure/WithAdminAuth";
+import { Order } from "@/types/OrderProps";
+import { useSession } from "next-auth/react";
 
 const Page = () => {
-  interface Order {
-    name: string;
-    email: string;
-    company: string;
-    productType: string;
-    phone?: string;
-    quantity?: number;
-    deliveryDate?: string;
-    description?: string;
-  }
 
   const [orderData, setOrderData] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-
-  // useEffect(() => {
-  //   fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bulkOrder`)
-  //     .then((res) => res.json())
-  //     .then((data) => setOrderData(data));
-  // }, []);
-
+  const { data } = useSession();
   useEffect(() => {
     const fetchBulkProduct = async () => {
-      const response = await getProducts({ products: `/bulkOrder` })
+      const response = await getProducts({ products: `/bulkOrder?email=${data?.user?.email}` })
       setOrderData(response)
     }
     fetchBulkProduct()
-  }, [])
+  }, [data?.user?.email])
 
   return (
     <div className="container mx-auto p-4">
