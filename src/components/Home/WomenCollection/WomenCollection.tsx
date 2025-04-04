@@ -1,7 +1,6 @@
 "use client"
 import getProducts from '@/apiAction/getProducts'
 import { ProductProps } from '@/types/productProps'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -22,13 +21,13 @@ const WomenCollection = () => {
 
     return (
         <div>
-            <section className="py-8 bg-white">
+            <section className="py-8 mt-10 bg-white">
                 <div className="container mx-auto px-4">
                     <header className="mb-6 text-center">
                         <h2 className="text-3xl font-semibold tracking-wider text-gray-800 uppercase">
                             Women Collection
                         </h2>
-                        <div className="w-20 h-[2px] bg-gray-400 mx-auto mt-1 mb-2"></div>
+                        <div className="w-20 h-[4px] rounded-2xl bg-red-500 mx-auto mt-1 mb-2"></div>
                     </header>
 
                     <div className="mb-8">
@@ -56,44 +55,10 @@ const WomenCollection = () => {
                             </div>
                             {/* Products in Grid */}
                             <div className="md:col-span-9">
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
                                     {womenProduct.map((product) => {
-                                        // return (
-                                        //     <div key={product._id} className="group">
-                                        //         <Link
-                                        //             href={{
-                                        //                 pathname: "/shop",
-                                        //                 query: {
-                                        //                     category: product?.category,
-                                        //                     subcategory: product?.subCategory,
-                                        //                 },
-                                        //             }}
-                                        //             key={product?.name}
-                                        //             className="block text-sm text-gray-600 hover:text-black transition-colors"
-                                        //         >
-                                        //             <div className="bg-gray-50 rounded overflow-hidden shadow-sm relative h-44 md:h-60">
-                                        //                 <Image
-                                        //                     src={product?.images[0]?.src}
-                                        //                     alt={product.name}
-                                        //                     width={200}
-                                        //                     height={200}
-                                        //                     className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                                        //                 />
-                                        //                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent py-2 px-3">
-
-                                        //                     <p className="text-white font-bold">
-                                        //                         {product.subCategory}
-                                        //                     </p>
-                                        //                 </div>
-                                        //             </div>
-                                        //         </Link>
-                                        //     </div>
-                                        // )
                                         return (
-                                            <Card
-                                                key={product._id}
-                                                className="relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg h-[250px] transition-all duration-300 hover:shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200"
-                                            >
+                                            <div key={product._id} className="relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200">
                                                 <Link
                                                     href={{
                                                         pathname: "/shop",
@@ -104,10 +69,13 @@ const WomenCollection = () => {
                                                     }}
                                                     className="block"
                                                 >
-                                                    <CardHeader className="p-0 relative">
-                                                        <div className="relative h-[150px] rounded-t overflow-hidden group">
+                                                    <div className="relative">
+                                                        <h3 className="absolute text-white -top-2 md:-top-4 lg:-top-2 left-1/2 z-40 transform -translate-x-1/2 bg-[#E7000B] text-lg px-2 py-1 rounded-lg shadow-md font-bold">
+                                                            {product?.subCategory}
+                                                        </h3>
+                                                        <div className="relative w-full h-56">
                                                             <Image
-                                                                src={product?.images[0].src || "/fallback.jpg"}
+                                                                src={product?.images?.[0]?.src || "/fallback.jpg"}
                                                                 alt={product?.name || "Product Image"}
                                                                 fill
                                                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -115,21 +83,9 @@ const WomenCollection = () => {
                                                                 loading="lazy"
                                                             />
                                                         </div>
-                                                    </CardHeader>
-
-                                                    <CardContent className="p-5 bg-white/90 backdrop-blur-lg">
-                                                        <h3 className="text-2xl font-semibold text-gray-800 line-clamp-1 transition-all hover:underline cursor-pointer">
-                                                            {product?.subCategory}
-                                                        </h3>
-                                                    </CardContent>
-
-                                                    <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                                                        <button className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full shadow-md hover:bg-gray-900 transition-all">
-                                                            View More
-                                                        </button>
                                                     </div>
                                                 </Link>
-                                            </Card>
+                                            </div>
                                         );
                                     })}
                                 </div>

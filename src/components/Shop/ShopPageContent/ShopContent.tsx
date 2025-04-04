@@ -50,18 +50,13 @@
 //         <div className="container mx-auto mt-4 px-4">
 //             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 //                 {products.map((product) => {
-//                     const coverImg = Array.isArray(product.images) ? product.images : [];
-//                     const randomImage =
-//                         coverImg.length > 0
-//                             ? coverImg[Math.floor(Math.random() * coverImg.length)].src
-//                             : 'default.jpg';
 //                     return (
 //                         <ProductCard
 //                             key={product._id}
-//                             id={product._id}
-//                             title={product.name}
+//                             _id={product._id}
+//                             name={product.name}
 //                             price={product.price}
-//                             imageUrl={randomImage}
+//                             image={product.images[0]?.src}
 //                             category={product?.category || ''}
 //                         />
 //                     );
@@ -72,8 +67,9 @@
 // };
 
 // export default ShopContent;
+
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import getProducts from '@/apiAction/getProducts';
 import { Loader } from '@/components/Loader/Loader';
@@ -86,16 +82,39 @@ const ShopContent = () => {
     const subCategory = params.get('subcategory');
     const [products, setProducts] = useState<ProductCardProps[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(1);
-    const productsPerPage = 5;
+    const [loadingMore, setLoadingMore] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const observer = useRef<IntersectionObserver | null>(null);
+    const limit = 10;
 
-    console.log(products)
+    const lastProductRef = useCallback((node: HTMLDivElement | null) => {
+        if (loading || loadingMore) return;
+        if (observer.current) observer.current.disconnect();
+        
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPage(prevPage => prevPage + 1);
+            }
+        });
+        
+        if (node) observer.current.observe(node);
+    }, [loading, loadingMore, hasMore]);
+
+    useEffect(() => {
+        setProducts([]);
+        setPage(1);
+        setHasMore(true);
+    }, [category, subCategory]);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                setLoading(true);
+                if (page === 1) {
+                    setLoading(true);
+                } else {
+                    setLoadingMore(true);
+                }
 
                 let queryString = '/products?';
                 if (category) {
@@ -105,26 +124,24 @@ const ShopContent = () => {
                     queryString += `${category ? '&' : ''}subcategory=${subCategory}`;
                 }
 
-                const response = await getProducts({
-                    products: `${queryString}&limit=${productsPerPage}&page=${currentPage}`
+                const response = await getProducts({ 
+                    products: `${queryString}&limit=${limit}&page=${page}` 
                 });
-                setProducts(response.products);
-                setTotalPages(Math.ceil(response.totalCount / productsPerPage));
+                
+                setProducts(prevProducts => [...prevProducts, ...response.products]);
+                setHasMore(response.products.length === limit);
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
                 setLoading(false);
+                setLoadingMore(false);
             }
         };
 
         fetchProducts();
-    }, [category, subCategory, currentPage]);
+    }, [category, subCategory, page]);
 
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-    };
-
-    if (loading) {
+    if (loading && page === 1) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <Loader />
@@ -135,52 +152,45 @@ const ShopContent = () => {
     return (
         <div className="container mx-auto mt-4 px-4">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products.map((product) => {
-                    return (
-                        <ProductCard
-                            key={product._id}
-                            _id={product._id}
-                            name={product.name}
-                            price={product.price}
-                            image={product.images[0]?.src}
-                            category={product?.category || ''}
-                        />
-                    );
+                {products.map((product, index) => {
+                    if (products.length === index + 1) {
+                        return (
+                            <div ref={lastProductRef} key={product._id}>
+                                <ProductCard
+                                    _id={product._id}
+                                    name={product.name}
+                                    price={product.price}
+                                    image={product.images[0]?.src}
+                                    category={product?.category || ''}
+                                />
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <ProductCard
+                                key={product._id}
+                                _id={product._id}
+                                name={product.name}
+                                price={product.price}
+                                image={product.images[0]?.src}
+                                category={product?.category || ''}
+                            />
+                        );
+                    }
                 })}
             </div>
-
-            {/* Pagination */}
-
-            <div className="flex justify-center mt-8 mb-8">
-                <nav className="flex items-center gap-2">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="px-3 py-1 rounded border disabled:opacity-50"
-                    >
-                        Previous
-                    </button>
-
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                        <button
-                            key={page}
-                            onClick={() => handlePageChange(page)}
-                            className={`px-3 py-1 rounded border ${currentPage === page ? 'bg-blue-500 text-white' : ''}`}
-                        >
-                            {page}
-                        </button>
-                    ))}
-
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="px-3 py-1 rounded border disabled:opacity-50"
-                    >
-                        Next
-                    </button>
-                </nav>
-            </div>
-
+            
+            {loadingMore && (
+                <div className="flex justify-center my-8">
+                    <Loader />
+                </div>
+            )}
+            
+            {!loading && !loadingMore && products.length === 0 && (
+                <div className="text-center py-8">
+                    No products found
+                </div>
+            )}
         </div>
     );
 };

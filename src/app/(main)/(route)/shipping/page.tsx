@@ -203,48 +203,60 @@ const Checkout = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="gap-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 grid grid-cols-2 gap-4">
-              <input
-                {...register("firstName", { required: "First name is required" })}
-                placeholder="First name"
-                className="border p-2 rounded w-full"
-              />
-              <input
-                {...register("lastName", { required: "Last name is required" })}
-                placeholder="Last name"
-                className="border p-2 rounded w-full"
-              />
-              <input
-                {...register("companyName")}
-                placeholder="Company name (Optional)"
-                className="border p-2 rounded col-span-2"
-              />
-              <input
-                {...register("address", { required: "Address is required" })}
-                placeholder="Address"
-                className="border p-2 rounded col-span-2"
-              />
-              <input
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address"
-                  }
-                })}
-                type="email"
-                // placeholder="Email"
-                defaultValue={`${email}`}
-                className="border p-2 rounded col-span-2 cursor-not-allowed"
-                disabled
-              />
-              <input
-                {...register("phoneNumber", {
-                  required: "Phone number is required",
-                })}
-                placeholder="Phone number"
-                className="border p-2 rounded col-span-2"
-              />
+              <div className="relative">
+                <input
+                  {...register("firstName", { required: "First name is required" })}
+                  placeholder="First name"
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+              <div className="relative">
+                <input
+                  {...register("lastName", { required: "Last name is required" })}
+                  placeholder="Last name"
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+              <div className="relative col-span-2">
+                <input
+                  {...register("companyName")}
+                  placeholder="Company name (Optional)"
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+              <div className="relative col-span-2">
+                <input
+                  {...register("address", { required: "Address is required" })}
+                  placeholder="Address"
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
+              <div className="relative col-span-2">
+                <input
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address"
+                    }
+                  })}
+                  type="email"
+                  defaultValue={`${email}`}
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm bg-gray-100 text-gray-500 cursor-not-allowed"
+                  disabled
+                />
+              </div>
+              <div className="relative col-span-2">
+                <input
+                  {...register("phoneNumber", {
+                    required: "Phone number is required",
+                  })}
+                  placeholder="Phone number"
+                  className="w-full border border-gray-300 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+              </div>
             </div>
+
 
             {/* Order Summary */}
             <div className="border shadow-md rounded-lg p-4">

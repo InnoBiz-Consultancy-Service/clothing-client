@@ -27,17 +27,7 @@ import getProducts from "@/apiAction/getProducts"
 import { Loader } from "@/components/Loader/Loader"
 import { ProductCardProps } from "@/types/productProps"
 import useAdmin from "@/hooks/useAdmin"
-
-
-type CartItem = {
-    _id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    images: { src: string }[];
-    color?: string;
-    size?: string;
-};
+import { CartProps } from "@/types/CartProps"
 
 
 export default function Navbar() {
@@ -105,13 +95,13 @@ export default function Navbar() {
 
     {/* cart length update button  */ }
 
-    const [cartData, setCartData] = useState<CartItem[]>([]);
+    const [cartData, setCartData] = useState<CartProps[]>([]);
 
     useEffect(() => {
         const loadCartData = () => {
             try {
                 const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
-                const formattedItems = items.map((item: Partial<CartItem>) => ({
+                const formattedItems = items.map((item: Partial<CartProps>) => ({
                     ...item,
                     price: Number(item.price) || 0,
                     quantity: Number(item.quantity) || 1,
@@ -147,7 +137,7 @@ export default function Navbar() {
                 <nav className="hidden md:flex items-center gap-4">
                     <div className="relative" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>
                         <Link className="hover:text-red-600" href={"/shop"}>
-                            <button className="flex cursor-pointer items-center gap-1 px-2 py-2 text-sm font-medium">
+                            <button className="flex cursor-pointer items-center gap-1 px-2 py-2 text-xl font-medium">
                                 Shop
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
