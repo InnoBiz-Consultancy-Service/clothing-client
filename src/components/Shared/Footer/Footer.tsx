@@ -99,7 +99,7 @@ export default function Footer() {
                   </li>
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                    <span>01938-179499</span>
+                    <span>+880 1938-179499</span>
                   </li>
                 </ul>
               </div>
@@ -116,7 +116,7 @@ export default function Footer() {
                   </li>
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                    <span>01828-721074</span>
+                    <span>+880 1828-721074</span>
                   </li>
                 </ul>
               </div>
