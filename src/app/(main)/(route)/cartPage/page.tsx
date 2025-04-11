@@ -147,7 +147,7 @@ const CartPage = () => {
           <div className="text-center py-10">
             <p className="text-lg">Your cart is empty</p>
             <Link href="/shop">
-              <button className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer">
+              <button className="mt-4 px-6 py-2 bg-black text-white rounded-lg transition-colors cursor-pointer">
                 Continue Shopping
               </button>
             </Link>
@@ -259,7 +259,7 @@ const CartPage = () => {
               </div>
 
               <button
-                className="w-full mt-4 p-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg cursor-pointer transition-colors"
+                className="w-full mt-4 p-3 bg-black text-white rounded-lg cursor-pointer transition-colors"
                 onClick={handleProceedButton}
               >
                 Proceed to Checkout
