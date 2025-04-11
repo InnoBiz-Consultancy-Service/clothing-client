@@ -1,7 +1,15 @@
-import Link from "next/link"
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
@@ -11,7 +19,9 @@ export default function Footer() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">Subscribe to our newsletter</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">
+                Subscribe to our newsletter
+              </h3>
               <p>Get the latest updates on new products and upcoming sales</p>
             </div>
             <div className="w-full md:w-auto flex flex-col sm:flex-row gap-2">
@@ -30,14 +40,16 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-6 text-2xl">
               <div className="bg-red-600 text-white p-1 rounded mr-1">
                 <span className="font-bold">Ten</span>
               </div>
               <span className="font-semibold text-white">Rus</span>
             </div>
+            <p className="mb-4 text-xl">Out of the Ordinary</p>
             <p className="mb-6">
-              TenRus offers premium quality products with fast shipping and excellent customer service.
+              TenRus offers premium quality products with fast shipping and
+              excellent customer service.
             </p>
             <div className="flex space-x-4">
               <SocialIcon icon={<Facebook size={18} />} />
@@ -59,7 +71,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold text-lg mb-4">Customer Service</h4>
+            <h4 className="text-white font-semibold text-lg mb-4">
+              Customer Service
+            </h4>
             <ul className="space-y-3">
               <FooterLink href="/contact">Contact Us</FooterLink>
               <FooterLink href="/faq">FAQs</FooterLink>
@@ -70,21 +84,47 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold text-lg mb-4">Contact Us</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0 mt-0.5" />
-                <span>123 Fashion Street, New York, NY 10001</span>
-              </li>
+            <h4 className="text-white font-semibold text-lg mb-4">
+              Contact Us
+            </h4>
+            <div className="space-y-2">
+              <div>
+                <h5 className="text-white font-medium mb-2">Dhaka Branch:</h5>
+                <ul className="space-y-1">
+                  <li className="flex items-start">
+                    <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0 mt-0.5" />
+                    <span>
+                      Block#D, Road#07, House#122, Basundhara, Badda, Dhaka-1229
+                    </span>
+                  </li>
+                  <li className="flex items-center">
+                    <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
+                    <span>01938-179499</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="text-white font-medium mb-2">
+                  Chittagong Branch:
+                </h5>
+                <ul className="space-y-1">
+                  <li className="flex items-start">
+                    <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0 mt-0.5" />
+                    <span>
+                      Mayor Goli, House No-467, 2 No Gate, Panchlaish, Chittagong
+                    </span>
+                  </li>
+                  <li className="flex items-center">
+                    <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
+                    <span>01828-721074</span>
+                  </li>
+                </ul>
+              </div>
               <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                <span>+1 (555) 123-4567</span>
+                <Mail className=" mr-3 text-red-500 flex-shrink-0" />
+                <span className="font-bold">tenrus2024@gmail.com</span>
               </li>
-              <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                <span>support@tenrus.com</span>
-              </li>
-            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -104,17 +144,23 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <li>
       <Link href={href} className="hover:text-white transition-colors">
         {children}
       </Link>
     </li>
-  )
+  );
 }
 
 function SocialIcon({ icon }: { icon: React.ReactNode }) {
@@ -125,5 +171,5 @@ function SocialIcon({ icon }: { icon: React.ReactNode }) {
     >
       {icon}
     </a>
-  )
+  );
 }

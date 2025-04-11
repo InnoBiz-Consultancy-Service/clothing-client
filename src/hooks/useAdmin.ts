@@ -13,7 +13,7 @@ const useAdmin = () => {
     useEffect(() => {
         const checkAdmin = async () => {
             const response = await getUsers({ admin: `/users/check-admin?email=${email}` })
-            const check = response.isAdmin;
+            const check = response?.isAdmin;
             setAdmin(check)
         }
         checkAdmin();
