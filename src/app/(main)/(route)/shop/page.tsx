@@ -1,11 +1,12 @@
-import React from 'react'
+import { Suspense } from 'react';
+import ShopContent from '@/components/Shop/ShopPageContent/ShopContent';
 
 const ShopPage = () => {
   return (
-    <div>
-      <h2>This is shop page</h2>
-    </div>
-  )
-}
+    <Suspense fallback={<div>Loading...</div>}>
+      <ShopContent />
+    </Suspense>
+  );
+};
 
-export default ShopPage
+export default ShopPage;

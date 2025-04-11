@@ -1,0 +1,19 @@
+[
+    {
+      "id": "1",
+      "name": "Wireless Headphones",
+      "image": "https://www.startech.com.bd/image/cache/catalog/headset/xtrike-me/hp-318/hp-318-01-228x228.webp",
+      "price": 49.99,
+      "quantity": 2,
+      "totalPrice": 99.98
+    },
+    {
+      "id": "2",
+      "name": "Smart Watch",
+      "image": "https://www.startech.com.bd/image/cache/catalog/smart-watch/colmi/p81/p81-02-74x74.webp",
+      "price": 79.99,
+      "quantity": 1,
+      "totalPrice": 79.99
+    }
+  ]
+  
