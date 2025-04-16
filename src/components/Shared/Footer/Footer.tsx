@@ -99,24 +99,25 @@ export default function Footer() {
                   </li>
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
+
                     <span>+880 1938-179499</span>
                   </li>
                 </ul>
               </div>
               <div>
                 <h5 className="text-white font-medium mb-2">
-                  Chittagong Branch:
+                  UK Branch:
                 </h5>
                 <ul className="space-y-1">
                   <li className="flex items-start">
                     <MapPin className="h-5 w-5 mr-3 text-red-500 flex-shrink-0 mt-0.5" />
                     <span>
-                      Mayor Goli, House No-467, 2 No Gate, Panchlaish, Chittagong
+                      26 New Road, E1 2AX, East London, United Kingdom
                     </span>
                   </li>
                   <li className="flex items-center">
                     <Phone className="h-5 w-5 mr-3 text-red-500 flex-shrink-0" />
-                    <span>+880 1828-721074</span>
+                    <span>+447448674130</span>
                   </li>
                 </ul>
               </div>
